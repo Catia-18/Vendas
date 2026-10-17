@@ -1,0 +1,373 @@
+{
+  "product": {
+    "id": "lumora-led-bar-01",
+    "name": "Luminária LED Recarregável com Sensor de Movimento",
+    "tagline": "Iluminação inteligente. Mais conforto no teu dia.",
+    "price": 29900,
+    "currency": "Kz",
+    "stock": 44,
+    "inStock": true,
+    "isActive": true,
+    "description": "Uma solução de iluminação prática e sofisticada para os espaços da tua casa onde precisas de mais luz. Sem fios, sem furos e com fixação magnética simples.",
+    "features": [
+      "Iluminação focada para armários, roupeiros, closets e corredores",
+      "Instalação prática magnética com fita adesiva de alta fixação (sem furos na parede ou móveis)",
+      "Sensor crepuscular e de movimento infravermelho (acende automaticamente ao detectar presença)",
+      "Bateria interna recarregável via USB-C (dispensa pilhas descartáveis)",
+      "Utilização prática em áreas escuras ou de passagem sem necessidade de ponto de tomada próximo",
+      "Dois modos de operação: Modo Sensor Automático e Modo Iluminação Contínua"
+    ],
+    "specs": [
+      {
+        "label": "Modelo",
+        "value": "LUMORA UltraSlim Motion 01"
+      },
+      {
+        "label": "Tipo de Iluminação",
+        "value": "Barra LED difusa suave anti-encandeamento"
+      },
+      {
+        "label": "Fixação",
+        "value": "Base metálica com fita adesiva + engate magnético direto"
+      },
+      {
+        "label": "Alimentação",
+        "value": "Bateria recarregável integrada via USB-C (cabo incluído)"
+      },
+      {
+        "label": "Sensor",
+        "value": "Sensor infravermelho de movimento com acionamento em ambiente escuro"
+      },
+      {
+        "label": "Acabamento",
+        "value": "Alumínio escovado e policarbonato fosco"
+      },
+      {
+        "label": "Conteúdo da Caixa",
+        "value": "1x Luminária LUMORA, 2x suportes magnéticos adesivos, 1x cabo USB-C, 1x manual em português"
+      },
+      {
+        "label": "Autonomia & Alcance",
+        "value": "Dados nominais do fabricante sob verificação prática",
+        "needsConfirmation": true
+      }
+    ],
+    "images": [
+      "/src/assets/images/hero_lumora_wardrobe_1792262010537.jpg",
+      "/src/assets/images/product_lumora_isolated_1792262011015.jpg",
+      "/src/assets/images/lumora_hallway_lighting_1792262011603.jpg",
+      "/src/assets/images/lumora_magnetic_mount_1792262011714.jpg",
+      "/src/assets/images/lumora_usbc_charging_1792262012537.jpg"
+    ],
+    "updatedAt": "2026-10-17T18:41:40.093Z"
+  },
+  "deliveryZones": [
+    {
+      "id": "zone-luanda-centro",
+      "province": "Luanda",
+      "municipality": "Luanda",
+      "zoneName": "Luanda Centro / Ingombota / Maianga / Rangel",
+      "fee": 2500,
+      "estimatedTime": "24h a 48h úteis",
+      "isActive": true,
+      "notes": "Entrega porta a porta com estafeta próprio"
+    },
+    {
+      "id": "zone-luanda-talatona",
+      "province": "Luanda",
+      "municipality": "Talatona",
+      "zoneName": "Talatona / Benfica / Morro Bento",
+      "fee": 2500,
+      "estimatedTime": "24h a 48h úteis",
+      "isActive": true,
+      "notes": "Entrega rápida na zona sul de Luanda"
+    },
+    {
+      "id": "zone-luanda-belas",
+      "province": "Luanda",
+      "municipality": "Belas",
+      "zoneName": "Centralidade do Kilamba / Belas / Camama",
+      "fee": 3000,
+      "estimatedTime": "24h a 48h úteis",
+      "isActive": true,
+      "notes": "Entrega em edifícios e condomínios fechados"
+    },
+    {
+      "id": "zone-luanda-kilamba-kiaxi",
+      "province": "Luanda",
+      "municipality": "Kilamba Kiaxi",
+      "zoneName": "Golfe / Palanca / Nova Vida",
+      "fee": 2500,
+      "estimatedTime": "24h a 48h úteis",
+      "isActive": true,
+      "notes": "Entrega porta a porta"
+    },
+    {
+      "id": "zone-luanda-viana",
+      "province": "Luanda",
+      "municipality": "Viana",
+      "zoneName": "Viana Sede / Zango / Estalagem",
+      "fee": 3500,
+      "estimatedTime": "24h a 48h úteis",
+      "isActive": true,
+      "notes": "Ponto de encontro ou endereço directo"
+    },
+    {
+      "id": "zone-luanda-cazenga",
+      "province": "Luanda",
+      "municipality": "Cazenga",
+      "zoneName": "Cazenga / Hoji-ya-Henda / Tala Hadi",
+      "fee": 2500,
+      "estimatedTime": "24h a 48h úteis",
+      "isActive": true,
+      "notes": "Entrega ao domicílio"
+    },
+    {
+      "id": "zone-luanda-cacuaco",
+      "province": "Luanda",
+      "municipality": "Cacuaco",
+      "zoneName": "Cacuaco Sede / Centralidade do Sequele",
+      "fee": 3500,
+      "estimatedTime": "24h a 72h úteis",
+      "isActive": true,
+      "notes": "Dias específicos de entrega na semana"
+    },
+    {
+      "id": "zone-benguela",
+      "province": "Benguela",
+      "municipality": "Benguela / Lobito",
+      "zoneName": "Cidades de Benguela e Lobito",
+      "fee": 6000,
+      "estimatedTime": "3 a 5 dias úteis",
+      "isActive": true,
+      "notes": "Envio via transportadora parceira (levantamento ou entrega local)"
+    },
+    {
+      "id": "zone-huambo",
+      "province": "Huambo",
+      "municipality": "Huambo",
+      "zoneName": "Huambo Centro e arredores",
+      "fee": 7000,
+      "estimatedTime": "4 a 6 dias úteis",
+      "isActive": true,
+      "notes": "Envio via transportadora"
+    },
+    {
+      "id": "zone-huila",
+      "province": "Huíla",
+      "municipality": "Lubango",
+      "zoneName": "Lubango",
+      "fee": 7500,
+      "estimatedTime": "4 a 6 dias úteis",
+      "isActive": true,
+      "notes": "Envio via agência de encomendas"
+    },
+    {
+      "id": "zone-cabinda",
+      "province": "Cabinda",
+      "municipality": "Cabinda",
+      "zoneName": "Cabinda Cidade",
+      "fee": 8000,
+      "estimatedTime": "4 a 7 dias úteis",
+      "isActive": true,
+      "notes": "Carga aérea / transportadora"
+    }
+  ],
+  "settings": {
+    "brandName": "LUMORA",
+    "slogan": "Iluminação inteligente. Mais conforto no teu dia.",
+    "whatsappNumber": "+244923456789",
+    "whatsappDisplay": "+244 923 456 789",
+    "email": "contacto@lumora.ao",
+    "currency": "Kz",
+    "adminPasscode": "lumora2026",
+    "faqs": [
+      {
+        "id": "faq-1",
+        "question": "Como funciona a luminária LED LUMORA?",
+        "answer": "A luminária dispõe de sensor de presença infravermelho e sensor crepuscular inteligente. Em ambientes escuros ou com pouca luz, ela acende automaticamente ao detectar movimento e apaga suavemente após alguns segundos sem movimento. Também inclui interruptor para manter a luz sempre acesa de forma contínua.",
+        "order": 1
+      },
+      {
+        "id": "faq-2",
+        "question": "Como se instala a luminária? Preciso furar a parede?",
+        "answer": "Não precisas furar nada. A luminária acompanha suportes metálicos com fita adesiva de fixação forte. Colas a base onde desejares (armário, corredor, parede ou madeira) e a luminária fixa-se magneticamente com grande firmeza.",
+        "order": 2
+      },
+      {
+        "id": "faq-3",
+        "question": "Como se recarrega a bateria?",
+        "answer": "Basta destacar a luminária da base magnética e conectá-la ao cabo USB-C incluído na embalagem. Podes carregá-la usando qualquer carregador de smartphone padrão ou entrada USB. Não usa pilhas descartáveis.",
+        "order": 3
+      },
+      {
+        "id": "faq-4",
+        "question": "Qual é o preço do produto?",
+        "answer": "O preço actual de referência é de 29.900 Kz por unidade. Podes encomendar directamente através deste site com cálculo imediato da taxa de entrega para a tua localização.",
+        "order": 4
+      },
+      {
+        "id": "faq-5",
+        "question": "Quais são os métodos de pagamento aceites?",
+        "answer": "Aceitamos pagamento na entrega (em numerário ou TPA Multicaixa no acto de recebimento para Luanda) e transferência bancária antecipada (BAI e BFA) com envio do comprovativo.",
+        "order": 5
+      },
+      {
+        "id": "faq-6",
+        "question": "Quanto custa a entrega e qual o prazo?",
+        "answer": "Em Luanda, a taxa de entrega varia habitualmente entre 2.500 Kz e 3.500 Kz com prazo de 24h a 48h úteis, dependendo do município. Para outras províncias, o envio é feito por transportadora parceira e o custo exacto é apresentado no formulário antes de finalizares a encomenda.",
+        "order": 6
+      },
+      {
+        "id": "faq-7",
+        "question": "Entregam noutras províncias além de Luanda?",
+        "answer": "Sim! Já temos rotas activas para províncias como Benguela, Huambo, Huíla e Cabinda via transportadora. Para outras localidades, podes contactar-nos directamente pelo WhatsApp para confirmar a viabilidade de despacho.",
+        "order": 7
+      },
+      {
+        "id": "faq-8",
+        "question": "Como posso contactar o suporte ao cliente?",
+        "answer": "Podes falar directamente com a nossa equipa através do botão flutuante de WhatsApp no ecrã ou enviando mensagem para o número +244 923 456 789.",
+        "order": 8
+      }
+    ],
+    "paymentMethods": {
+      "cash_on_delivery": {
+        "id": "cash_on_delivery",
+        "name": "Pagamento na Entrega (TPA Multicaixa ou Dinheiro)",
+        "enabled": true,
+        "description": "Paga no momento da recepção do produto no teu endereço. Aceitamos pagamento com cartão via TPA móvel ou dinheiro em mão.",
+        "allowedProvinces": [
+          "Luanda"
+        ]
+      },
+      "bank_transfer": {
+        "id": "bank_transfer",
+        "name": "Transferência Bancária / Multicaixa Express",
+        "enabled": true,
+        "description": "Efectua o pagamento para as nossas contas bancárias oficiais e envia o comprovativo por WhatsApp com o teu código de encomenda.",
+        "accounts": [
+          {
+            "id": "acc-bai",
+            "bank": "Banco Angolano de Investimentos (BAI)",
+            "holder": "LUMORA — Comércio & Iluminação",
+            "iban": "AO06 0040 0000 1234 5678 9012 3",
+            "accountNumber": "1234567810"
+          },
+          {
+            "id": "acc-bfa",
+            "bank": "Banco de Fomento Angola (BFA)",
+            "holder": "LUMORA — Comércio & Iluminação",
+            "iban": "AO06 0006 0000 9876 5432 1098 7",
+            "accountNumber": "9876543210"
+          }
+        ],
+        "instructions": "Por favor, inclui o código da encomenda (ex: LMR-XXXXX) na descrição da transferência e envia o comprovativo no WhatsApp."
+      }
+    },
+    "policies": {
+      "terms": "Termos e Condições LUMORA: Ao realizar uma encomenda na nossa loja online, o cliente confirma a veracidade dos dados de entrega e contacto fornecidos. As encomendas ficam reservadas durante 48 horas enquanto se aguarda confirmação de contacto ou comprovativo de pagamento.",
+      "privacy": "Política de Privacidade: A LUMORA recolhe apenas os dados estritamente necessários para o processamento, entrega e suporte da tua encomenda (nome, telefone e endereço). Não partilhamos, vendemos ou cedemos os teus dados a terceiros.",
+      "delivery": "Política de Entrega: As entregas em Luanda são coordenadas pela nossa equipa de estafetas com contacto telefónico prévio no dia da entrega. Para outras províncias, o despacho é efetuado via agência ou transportadora parceira após confirmação do pagamento.",
+      "returns": "Trocas e Devoluções: Caso o produto apresente defeito de fabrico, o cliente dispõe de 7 dias após a recepção para solicitar a verificação e substituição da luminária, mediante apresentação do produto na embalagem original."
+    }
+  },
+  "orders": [
+    {
+      "id": "LMR-84123",
+      "customerName": "António Silva",
+      "customerPhone": "+244923123456",
+      "province": "Luanda",
+      "municipality": "Talatona",
+      "neighborhood": "Benfica",
+      "address": "Rua 4, Casa 20",
+      "referencePoint": "Em frente ao banco BAI",
+      "notes": "",
+      "quantity": 1,
+      "unitPrice": 29900,
+      "subtotal": 29900,
+      "deliveryFee": 2500,
+      "total": 32400,
+      "paymentMethod": "cash_on_delivery",
+      "orderStatus": "new",
+      "paymentStatus": "pending",
+      "internalNotes": "",
+      "history": [
+        {
+          "timestamp": "2026-10-17T18:41:48.881Z",
+          "action": "Encomenda registada com sucesso pelo cliente"
+        }
+      ],
+      "createdAt": "2026-10-17T18:41:48.881Z",
+      "updatedAt": "2026-10-17T18:41:48.881Z"
+    },
+    {
+      "id": "LMR-10492",
+      "customerName": "Manuel dos Santos Cabral",
+      "customerPhone": "+244923112233",
+      "province": "Luanda",
+      "municipality": "Talatona",
+      "neighborhood": "Benfica",
+      "address": "Rua Principal do Benfica, Condomínio Girassol, Casa 14B",
+      "referencePoint": "Próximo à padaria Bela Luanda",
+      "notes": "Ligar antes de chegar, condomínio com portaria",
+      "quantity": 2,
+      "unitPrice": 29900,
+      "subtotal": 59800,
+      "deliveryFee": 2500,
+      "total": 62300,
+      "paymentMethod": "cash_on_delivery",
+      "orderStatus": "confirmed",
+      "paymentStatus": "pending",
+      "internalNotes": "Cliente confirmou por chamada. Estafeta Rui escalado para entrega amanhã às 14h.",
+      "history": [
+        {
+          "timestamp": "2026-10-16T22:41:40.094Z",
+          "action": "Nova encomenda submetida via website"
+        },
+        {
+          "timestamp": "2026-10-17T03:41:40.094Z",
+          "action": "Estado alterado para Confirmada após contacto telefónico"
+        }
+      ],
+      "createdAt": "2026-10-16T22:41:40.094Z",
+      "updatedAt": "2026-10-17T03:41:40.094Z"
+    },
+    {
+      "id": "LMR-10488",
+      "customerName": "Esperança de Almeida",
+      "customerPhone": "+244912998877",
+      "province": "Luanda",
+      "municipality": "Belas",
+      "neighborhood": "Kilamba",
+      "address": "Quarteirão B, Edifício B12, Apartamento 402",
+      "referencePoint": "Entrada junto à farmácia da rotunda",
+      "notes": "Entregar preferencialmente após as 16h",
+      "quantity": 1,
+      "unitPrice": 29900,
+      "subtotal": 29900,
+      "deliveryFee": 3000,
+      "total": 32900,
+      "paymentMethod": "bank_transfer",
+      "orderStatus": "delivered",
+      "paymentStatus": "paid",
+      "internalNotes": "Comprovativo BAI verificado com sucesso. Entrega concluída pelo estafeta.",
+      "history": [
+        {
+          "timestamp": "2026-10-15T18:41:40.094Z",
+          "action": "Nova encomenda submetida via website"
+        },
+        {
+          "timestamp": "2026-10-16T02:41:40.094Z",
+          "action": "Pagamento confirmado via BAI"
+        },
+        {
+          "timestamp": "2026-10-16T18:41:40.094Z",
+          "action": "Encomenda entregue com sucesso"
+        }
+      ],
+      "createdAt": "2026-10-15T18:41:40.094Z",
+      "updatedAt": "2026-10-16T18:41:40.094Z"
+    }
+  ]
+}

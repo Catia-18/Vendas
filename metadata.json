@@ -1,0 +1,6 @@
+{
+  "name": "LUMORA Angola - Loja Online Premium",
+  "description": "Plataforma de e-commerce da LUMORA para Angola. Luminária LED recarregável com sensor de movimento inteligente, entregas em Luanda e províncias, e pagamentos locais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
