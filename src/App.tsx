@@ -16,11 +16,17 @@ import { LoginModal } from './components/LoginModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck } from 'lucide-react';
 
+import {
+  INITIAL_PRODUCT,
+  INITIAL_DELIVERY_ZONES,
+  INITIAL_SETTINGS
+} from './data/defaultStore';
+
 export default function App() {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [deliveryZones, setDeliveryZones] = useState<DeliveryZone[]>([]);
-  const [settings, setSettings] = useState<StoreSettings | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [product, setProduct] = useState<Product>(INITIAL_PRODUCT);
+  const [deliveryZones, setDeliveryZones] = useState<DeliveryZone[]>(INITIAL_DELIVERY_ZONES);
+  const [settings, setSettings] = useState<StoreSettings>(INITIAL_SETTINGS);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   // Active Navigation Tab: 'home' | 'product' | 'benefits' | 'how_it_works' | 'faq' | 'checkout'
@@ -40,21 +46,20 @@ export default function App() {
   // Load store data
   const loadStoreData = async () => {
     try {
-      setLoading(true);
       setError(null);
       const [prodData, zonesData, settingsData] = await Promise.all([
         fetchProduct(),
         fetchDeliveryZones(false),
         fetchSettings()
       ]);
-      setProduct(prodData);
-      setDeliveryZones(zonesData);
-      setSettings(settingsData);
+      if (prodData) setProduct(prodData);
+      if (zonesData && zonesData.length > 0) setDeliveryZones(zonesData);
+      if (settingsData) setSettings(settingsData);
     } catch (err: any) {
-      console.error('Failed to load store data:', err);
-      setError('Não foi possível carregar a loja. Por favor recarrega a página.');
-    } finally {
-      setLoading(false);
+      console.warn('Usando dados predefinidos da loja (modo Vercel resiliente):', err);
+      setProduct(INITIAL_PRODUCT);
+      setDeliveryZones(INITIAL_DELIVERY_ZONES);
+      setSettings(INITIAL_SETTINGS);
     }
   };
 

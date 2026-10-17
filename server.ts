@@ -1,19 +1,25 @@
 import express from 'express';
-import { createServer as createViteServer } from 'vite';
 import path from 'path';
 import fs from 'fs';
 import Stripe from 'stripe';
 
 const app = express();
 const PORT = 3000;
-const DB_DIR = path.resolve(process.cwd(), 'data');
+
+// On Vercel / AWS Lambda, process.cwd() is read-only, only /tmp is writable
+const isVercel = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.VERCEL_ENV);
+const DB_DIR = isVercel ? '/tmp/data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = path.join(DB_DIR, 'lumora-db.json');
 
 app.use(express.json());
 
-// Ensure data directory exists
-if (!fs.existsSync(DB_DIR)) {
-  fs.mkdirSync(DB_DIR, { recursive: true });
+// Ensure data directory exists safely
+try {
+  if (!fs.existsSync(DB_DIR)) {
+    fs.mkdirSync(DB_DIR, { recursive: true });
+  }
+} catch (e) {
+  console.warn('Could not create DB_DIR, using in-memory mode:', e);
 }
 
 // Initial default database structure
@@ -366,18 +372,39 @@ const DEFAULT_ORDERS = [
   }
 ];
 
-// Helper to read and write database
+// In-memory cache for fast access and fallback in read-only environments (like Vercel Serverless)
+let inMemoryDb: any = null;
+
 function getDb() {
+  if (inMemoryDb) return inMemoryDb;
+
+  // If DB_FILE does not exist, check if repo data/lumora-db.json exists to seed it
   if (!fs.existsSync(DB_FILE)) {
+    const seedPath = path.resolve(process.cwd(), 'data', 'lumora-db.json');
+    if (fs.existsSync(seedPath)) {
+      try {
+        const rawSeed = fs.readFileSync(seedPath, 'utf-8');
+        inMemoryDb = JSON.parse(rawSeed);
+        try {
+          fs.writeFileSync(DB_FILE, rawSeed, 'utf-8');
+        } catch {}
+        return inMemoryDb;
+      } catch {}
+    }
+
     const initialData = {
       product: DEFAULT_PRODUCT,
       deliveryZones: DEFAULT_DELIVERY_ZONES,
       settings: DEFAULT_SETTINGS,
       orders: DEFAULT_ORDERS
     };
-    fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    inMemoryDb = initialData;
+    try {
+      fs.writeFileSync(DB_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+    } catch {}
     return initialData;
   }
+
   try {
     const raw = fs.readFileSync(DB_FILE, 'utf-8');
     const data = JSON.parse(raw);
@@ -389,22 +416,32 @@ function getDb() {
       data.settings.paymentMethods.stripe = DEFAULT_SETTINGS.paymentMethods.stripe;
     }
     if (!data.orders) data.orders = DEFAULT_ORDERS;
+    inMemoryDb = data;
     return data;
   } catch (err) {
     console.error('Error reading db, falling back to defaults:', err);
-    return {
+    inMemoryDb = {
       product: DEFAULT_PRODUCT,
       deliveryZones: DEFAULT_DELIVERY_ZONES,
       settings: DEFAULT_SETTINGS,
       orders: DEFAULT_ORDERS
     };
+    return inMemoryDb;
   }
 }
 
 function saveDb(data: any) {
-  const tempPath = `${DB_FILE}.tmp`;
-  fs.writeFileSync(tempPath, JSON.stringify(data, null, 2), 'utf-8');
-  fs.renameSync(tempPath, DB_FILE);
+  inMemoryDb = data;
+  try {
+    if (!fs.existsSync(DB_DIR)) {
+      fs.mkdirSync(DB_DIR, { recursive: true });
+    }
+    const tempPath = `${DB_FILE}.tmp`;
+    fs.writeFileSync(tempPath, JSON.stringify(data, null, 2), 'utf-8');
+    fs.renameSync(tempPath, DB_FILE);
+  } catch (err) {
+    console.warn('Could not persist to disk (serverless read-only mode). Data held in-memory.', err);
+  }
 }
 
 // Authentication middleware for admin routes
@@ -1011,6 +1048,7 @@ async function startServer() {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   } else {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa'
@@ -1023,6 +1061,13 @@ async function startServer() {
   });
 }
 
-startServer().catch((err) => {
-  console.error('Failed to start server:', err);
-});
+// Only start standalone server when executed directly (not when imported as a serverless function)
+const isServerless = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.VERCEL_ENV);
+if (!isServerless) {
+  startServer().catch((err) => {
+    console.error('Failed to start server:', err);
+  });
+}
+
+export { app };
+export default app;
