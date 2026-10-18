@@ -569,3 +569,57 @@ export async function deleteAdminZone(token: string, id: string): Promise<{ succ
   localStorage.setItem('lumora_delivery_zones', JSON.stringify(zones));
   return { success: true };
 }
+
+export interface YouTubeVideoInfo {
+  title?: string;
+  author_name?: string;
+  thumbnail_url?: string;
+  html?: string;
+}
+
+export function extractYouTubeId(urlOrId?: string): string | null {
+  if (!urlOrId) return null;
+  const trimmed = urlOrId.trim();
+  if (/^[a-zA-Z0-9_-]{11}$/.test(trimmed)) {
+    return trimmed;
+  }
+  const match = trimmed.match(
+    /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([a-zA-Z0-9_-]{11})/
+  );
+  return match ? match[1] : null;
+}
+
+export async function fetchYouTubeVideoInfo(urlOrId: string): Promise<YouTubeVideoInfo | null> {
+  const videoId = extractYouTubeId(urlOrId);
+  const targetUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : urlOrId;
+
+  // 1. Try server-side proxy
+  try {
+    const res = await fetch(`/api/youtube/info?url=${encodeURIComponent(targetUrl)}`);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {}
+
+  // 2. Direct oEmbed fallback (supported in browser CORS)
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/oembed?url=${encodeURIComponent(targetUrl)}&format=json`
+    );
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch {}
+
+  // 3. Fallback info
+  if (videoId) {
+    return {
+      title: 'Demonstração da Luminária LED Recarregável com Sensor de Movimento',
+      author_name: 'LUMORA Angola',
+      thumbnail_url: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`
+    };
+  }
+
+  return null;
+}
+

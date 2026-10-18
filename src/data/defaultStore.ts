@@ -36,6 +36,9 @@ export const INITIAL_PRODUCT: Product = {
     '/src/assets/images/lumora_magnetic_mount_1792262011714.jpg',
     '/src/assets/images/lumora_usbc_charging_1792262012537.jpg'
   ],
+  platformVideoUrl: '/assets/videos/luminaria_lumora_demonstracao.mp4',
+  youtubeVideoUrl: 'https://www.youtube.com/watch?v=L24CqW2Hx34',
+  youtubeVideoTitle: 'Demonstração da Luminária LED Recarregável com Sensor de Movimento',
   updatedAt: new Date().toISOString()
 };
 

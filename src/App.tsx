@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { PoliciesModal } from './components/PoliciesModal';
 import { LoginModal } from './components/LoginModal';
+import { YouTubeVideoModal } from './components/YouTubeVideoModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck } from 'lucide-react';
 
@@ -33,6 +34,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<AppTab>('home');
 
   // Modals & Authentication
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
   const [orderResult, setOrderResult] = useState<OrderConfirmationResult | null>(null);
   const [activePolicyKey, setActivePolicyKey] = useState<
     'terms' | 'privacy' | 'delivery' | 'returns' | null
@@ -161,6 +163,7 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onOpenLogin={handleOpenLogin}
+        onOpenVideo={() => setIsVideoModalOpen(true)}
       />
 
       {/* Main Content: Shows strictly the selected tab */}
@@ -174,6 +177,7 @@ export default function App() {
                 setActiveTab(tab);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+              onOpenVideo={() => setIsVideoModalOpen(true)}
             />
 
             {/* Quick Explore Chapters on Home */}
@@ -281,6 +285,7 @@ export default function App() {
                 setActiveTab(tab);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
+              onOpenVideo={() => setIsVideoModalOpen(true)}
             />
           </div>
         )}
@@ -327,6 +332,19 @@ export default function App() {
 
       {/* Floating WhatsApp Action */}
       <FloatingWhatsApp whatsappNumber={settings.whatsappNumber} />
+
+      {/* Interactive Video Modal (Platform Native + YouTube API) */}
+      <YouTubeVideoModal
+        isOpen={isVideoModalOpen}
+        videoUrl={product?.youtubeVideoUrl || 'https://www.youtube.com/watch?v=L24CqW2Hx34'}
+        platformVideoUrl={product?.platformVideoUrl || '/assets/videos/luminaria_lumora_demonstracao.mp4'}
+        productName={product?.name}
+        onClose={() => setIsVideoModalOpen(false)}
+        onGoToCheckout={() => {
+          setActiveTab('checkout');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
 
       {/* Order Confirmation Receipt Modal */}
       <OrderConfirmationModal

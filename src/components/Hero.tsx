@@ -1,13 +1,14 @@
 import React from 'react';
-import { ArrowRight, Truck, ShieldCheck, Zap, Compass, Check } from 'lucide-react';
+import { ArrowRight, Truck, ShieldCheck, Zap, Check, Play } from 'lucide-react';
 import { Product, AppTab } from '../types';
 
 interface HeroProps {
   product: Product | null;
   onSelectTab: (tab: AppTab) => void;
+  onOpenVideo?: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({ product, onSelectTab }) => {
+export const Hero: React.FC<HeroProps> = ({ product, onSelectTab, onOpenVideo }) => {
   return (
     <section className="relative bg-[#17191C] text-[#F8F8F6] pt-14 pb-20 lg:pt-20 lg:pb-28 overflow-hidden">
       {/* Subtle architectural ambient illumination */}
@@ -15,7 +16,7 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Copy & Actions (NO PRICE on main screen as requested) */}
+          {/* Left Column: Copy & Actions */}
           <div className="lg:col-span-7 space-y-6">
             <div className="flex items-center gap-2 text-xs font-semibold text-[#C6A66B] uppercase tracking-wider">
               <span>LUMORA</span>
@@ -34,7 +35,7 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab }) => {
               Sem fios eléctricos visíveis, sem furos em paredes e com fixação magnética instantânea.
             </p>
 
-            {/* Quality Statement Box (Clean value proposition without price) */}
+            {/* Quality Statement Box */}
             <div className="py-4 border-y border-white/10 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-[#F8F8F6]/80">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-[#C6A66B] shrink-0" />
@@ -54,21 +55,35 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab }) => {
               </div>
             </div>
 
-            {/* Navigational CTA cluster to separate sections */}
-            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            {/* Navigational CTA cluster */}
+            <div className="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
               <button
                 type="button"
                 onClick={() => onSelectTab('product')}
-                className="inline-flex justify-center items-center gap-2 px-8 py-4 text-xs font-bold uppercase tracking-wider text-[#17191C] bg-[#C6A66B] hover:bg-[#d8b87c] active:scale-[0.98] transition-all rounded-md shadow-lg shadow-[#C6A66B]/15"
+                className="inline-flex justify-center items-center gap-2 px-7 py-4 text-xs font-bold uppercase tracking-wider text-[#17191C] bg-[#C6A66B] hover:bg-[#d8b87c] active:scale-[0.98] transition-all rounded-md shadow-lg shadow-[#C6A66B]/15 cursor-pointer"
               >
                 <span>Conhecer o Produto</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
+              {onOpenVideo && (
+                <button
+                  type="button"
+                  onClick={onOpenVideo}
+                  className="inline-flex justify-center items-center gap-2.5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#F8F8F6] hover:text-[#C6A66B] bg-[#C6A66B]/10 hover:bg-[#C6A66B]/20 border border-[#C6A66B]/40 hover:border-[#C6A66B] transition-all rounded-md shadow group cursor-pointer"
+                  title="Assistir ao vídeo da luminária na plataforma (sem restrições)"
+                >
+                  <span className="w-6 h-6 rounded-full bg-[#C6A66B] text-[#17191C] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                    <Play className="w-3 h-3 fill-[#17191C] translate-x-0.5" />
+                  </span>
+                  <span>Ver Vídeo da Luminária</span>
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={() => onSelectTab('checkout')}
-                className="inline-flex justify-center items-center px-6 py-4 text-xs font-semibold uppercase tracking-wider text-[#F8F8F6] hover:text-[#C6A66B] border border-white/20 hover:border-[#C6A66B]/50 transition-colors rounded-md"
+                className="inline-flex justify-center items-center px-5 py-4 text-xs font-semibold uppercase tracking-wider text-[#F8F8F6]/80 hover:text-[#C6A66B] border border-white/20 hover:border-[#C6A66B]/50 transition-colors rounded-md cursor-pointer"
               >
                 Fazer Encomenda
               </button>
@@ -91,37 +106,68 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab }) => {
             </div>
           </div>
 
-          {/* Right Column: Hero High-Fidelity Showcase */}
+          {/* Right Column: Hero High-Fidelity Showcase (Clicking on it opens the video) */}
           <div className="lg:col-span-5 relative">
-            <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-[#23272B] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[4/5] flex items-center justify-center group">
+            <div
+              onClick={onOpenVideo}
+              role={onOpenVideo ? 'button' : undefined}
+              tabIndex={onOpenVideo ? 0 : undefined}
+              onKeyDown={(e) => {
+                if (onOpenVideo && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  onOpenVideo();
+                }
+              }}
+              aria-label="Clica na luminária para assistir ao vídeo de demonstração"
+              className="relative rounded-2xl overflow-hidden border border-white/10 hover:border-[#C6A66B]/60 shadow-2xl bg-[#23272B] aspect-[4/3] sm:aspect-[4/3] lg:aspect-[4/5] flex items-center justify-center group cursor-pointer transition-all duration-300"
+            >
               <img
                 src={product?.images?.[0] || '/src/assets/images/hero_lumora_wardrobe_1792262010537.jpg'}
                 alt="Luminária LED LUMORA instalada num roupeiro moderno"
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover object-center group-hover:scale-[1.02] transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
               />
 
               {/* Gradient Scrim */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/90 via-transparent to-black/10 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/90 via-[#17191C]/20 to-black/20 group-hover:via-[#17191C]/30 transition-colors pointer-events-none" />
 
-              <div className="absolute bottom-4 left-4 right-4 p-4 bg-[#17191C]/85 backdrop-blur-md rounded-xl border border-white/10 text-xs">
+              {/* Central Pulsing Play Button Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="flex flex-col items-center gap-2.5 text-center">
+                  <div className="relative group-hover:scale-110 transition-transform duration-300">
+                    <div className="absolute -inset-3 bg-[#C6A66B]/30 rounded-full blur-md animate-pulse" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#C6A66B] text-[#17191C] flex items-center justify-center shadow-2xl border-2 border-white/40">
+                      <Play className="w-7 h-7 sm:w-9 sm:h-9 fill-[#17191C] translate-x-0.5" />
+                    </div>
+                  </div>
+
+                  <div className="px-4 py-1.5 rounded-full bg-[#17191C]/90 backdrop-blur-md border border-[#C6A66B]/50 text-xs font-bold text-[#F8F8F6] shadow-xl flex items-center gap-2 group-hover:border-[#C6A66B] transition-colors">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span>Clica na Luminária para Ver o Vídeo</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Details Tag */}
+              <div className="absolute bottom-4 left-4 right-4 p-4 bg-[#17191C]/90 backdrop-blur-md rounded-xl border border-white/10 text-xs pointer-events-auto">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-[#F8F8F6]">Aplicação em Roupeiro & Closet</span>
-                  <span className="text-[#C6A66B] font-mono">Modo Inteligente</span>
+                  <span className="text-[#C6A66B] font-mono text-[11px] px-2 py-0.5 rounded bg-[#C6A66B]/15 border border-[#C6A66B]/30">
+                    Sensor Inteligente
+                  </span>
                 </div>
                 <p className="text-[11px] text-[#F8F8F6]/70 mt-1">
                   Acende suavemente ao abrir a porta ou ao aproximar a mão
                 </p>
-                <div className="mt-3 pt-2 border-t border-white/10 flex justify-between items-center">
-                  <span className="text-[11px] text-white/50">Ver fotos e detalhes</span>
-                  <button
-                    type="button"
-                    onClick={() => onSelectTab('product')}
-                    className="text-[11px] text-[#C6A66B] font-semibold hover:underline flex items-center gap-1"
-                  >
-                    <span>Abrir Galeria</span>
+                <div className="mt-3 pt-2 border-t border-white/10 flex justify-between items-center text-[11px]">
+                  <span className="text-white/80 flex items-center gap-1.5">
+                    <Play className="w-3 h-3 text-[#C6A66B] fill-[#C6A66B]" />
+                    <span>Vídeo disponível na plataforma (Sem Restrições)</span>
+                  </span>
+                  <span className="text-[#C6A66B] font-semibold hover:underline flex items-center gap-1">
+                    <span>Assistir Agora</span>
                     <ArrowRight className="w-3 h-3" />
-                  </button>
+                  </span>
                 </div>
               </div>
             </div>

@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { Product, AppTab } from '../types';
-import { Info, CheckCircle2, ArrowRight, ShoppingBag } from 'lucide-react';
+import { Info, CheckCircle2, ArrowRight, ShoppingBag, Play } from 'lucide-react';
 
 interface ProductGalleryProps {
   product: Product | null;
   onSelectTab: (tab: AppTab) => void;
+  onOpenVideo?: () => void;
 }
 
-export const ProductGallery: React.FC<ProductGalleryProps> = ({ product, onSelectTab }) => {
+export const ProductGallery: React.FC<ProductGalleryProps> = ({
+  product,
+  onSelectTab,
+  onOpenVideo
+}) => {
   const images = [
     {
       url: '/src/assets/images/product_lumora_isolated_1792262011015.jpg',
@@ -48,8 +53,18 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product, onSelec
         {/* Header with Title and Pricing Banner */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-[#E4E4E7]">
           <div>
-            <div className="text-xs font-semibold uppercase tracking-wider text-[#C6A66B] mb-2">
-              Detalhes Técnicos & Galeria
+            <div className="text-xs font-semibold uppercase tracking-wider text-[#C6A66B] mb-2 flex items-center gap-2">
+              <span>Detalhes Técnicos & Galeria</span>
+              {onOpenVideo && (
+                <button
+                  type="button"
+                  onClick={onOpenVideo}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#C6A66B]/15 text-[#C6A66B] hover:bg-[#C6A66B] hover:text-[#17191C] text-[11px] font-bold transition-colors cursor-pointer border border-[#C6A66B]/30"
+                >
+                  <Play className="w-2.5 h-2.5 fill-current" />
+                  <span>Ver Vídeo da Luminária</span>
+                </button>
+              )}
             </div>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-display tracking-tight text-[#17191C]">
               {product?.name || 'Luminária LED Recarregável com Sensor de Movimento'}
@@ -60,8 +75,8 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product, onSelec
             </p>
           </div>
 
-          {/* Pricing Card with Buy CTA */}
-          <div className="p-5 bg-[#17191C] text-[#F8F8F6] rounded-xl flex items-center justify-between sm:justify-end gap-6 shrink-0 shadow-md">
+          {/* Pricing Card with Buy & Video CTAs */}
+          <div className="p-5 bg-[#17191C] text-[#F8F8F6] rounded-xl flex flex-wrap sm:flex-nowrap items-center justify-between sm:justify-end gap-4 sm:gap-6 shrink-0 shadow-md">
             <div>
               <span className="text-[11px] uppercase tracking-wider text-[#F8F8F6]/60 block">
                 Preço de Referência
@@ -74,14 +89,28 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product, onSelec
               </div>
             </div>
 
-            <button
-              type="button"
-              onClick={() => onSelectTab('checkout')}
-              className="px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#17191C] bg-[#C6A66B] hover:bg-[#d8b87c] active:scale-[0.98] transition-all rounded-md shadow flex items-center gap-2 whitespace-nowrap"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              <span>Encomendar Agora</span>
-            </button>
+            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              {onOpenVideo && (
+                <button
+                  type="button"
+                  onClick={onOpenVideo}
+                  className="px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#F8F8F6] hover:text-[#C6A66B] bg-white/10 hover:bg-white/15 border border-[#C6A66B]/50 hover:border-[#C6A66B] active:scale-[0.98] transition-all rounded-md shadow flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer flex-1 sm:flex-initial"
+                  title="Assistir demonstração da luminária na plataforma (sem restrições)"
+                >
+                  <Play className="w-3.5 h-3.5 fill-[#C6A66B] text-[#C6A66B]" />
+                  <span>Vídeo da Luminária</span>
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={() => onSelectTab('checkout')}
+                className="px-5 py-3 text-xs font-bold uppercase tracking-wider text-[#17191C] bg-[#C6A66B] hover:bg-[#d8b87c] active:scale-[0.98] transition-all rounded-md shadow flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer flex-1 sm:flex-initial"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                <span>Encomendar</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -89,20 +118,51 @@ export const ProductGallery: React.FC<ProductGalleryProps> = ({ product, onSelec
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Main Visual Display */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="relative rounded-xl overflow-hidden bg-[#17191C] border border-[#E4E4E7] aspect-[4/3] flex items-center justify-center shadow-sm">
+            <div
+              onClick={onOpenVideo}
+              role={onOpenVideo ? 'button' : undefined}
+              tabIndex={onOpenVideo ? 0 : undefined}
+              onKeyDown={(e) => {
+                if (onOpenVideo && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  onOpenVideo();
+                }
+              }}
+              title="Clica na Luminária para ver o vídeo da demonstração"
+              className="relative rounded-xl overflow-hidden bg-[#17191C] border border-[#E4E4E7] hover:border-[#C6A66B] aspect-[4/3] flex items-center justify-center shadow-md group cursor-pointer transition-all duration-300"
+            >
               <img
                 src={images[activeIndex].url}
                 alt={images[activeIndex].title}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-500"
               />
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 text-white">
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#C6A66B] block">
-                  {images[activeIndex].title}
-                </span>
-                <p className="text-xs text-white/90 mt-0.5">
-                  {images[activeIndex].caption}
-                </p>
+
+              {/* YouTube Play Icon on Hover / Clickable Banner */}
+              {onOpenVideo && (
+                <div className="absolute top-4 right-4 z-10">
+                  <div className="px-3 py-1.5 rounded-full bg-[#17191C]/85 backdrop-blur-md border border-[#C6A66B]/50 text-white text-[11px] font-bold shadow-lg flex items-center gap-2 group-hover:bg-[#C6A66B] group-hover:text-[#17191C] group-hover:border-[#C6A66B] transition-colors">
+                    <Play className="w-3 h-3 fill-current" />
+                    <span>Ver Vídeo da Luminária</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4 sm:p-5 text-white flex items-end justify-between">
+                <div>
+                  <span className="text-xs font-semibold uppercase tracking-wider text-[#C6A66B] block">
+                    {images[activeIndex].title}
+                  </span>
+                  <p className="text-xs text-white/90 mt-0.5">
+                    {images[activeIndex].caption}
+                  </p>
+                </div>
+                {onOpenVideo && (
+                  <span className="text-[11px] text-[#C6A66B] font-semibold flex items-center gap-1 shrink-0 ml-3">
+                    <Play className="w-3 h-3 fill-current" />
+                    <span className="hidden sm:inline">Assistir Vídeo</span>
+                  </span>
+                )}
               </div>
             </div>
 

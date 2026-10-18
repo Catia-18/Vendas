@@ -12,6 +12,7 @@ const DB_DIR = isVercel ? '/tmp/data' : path.resolve(process.cwd(), 'data');
 const DB_FILE = path.join(DB_DIR, 'lumora-db.json');
 
 app.use(express.json());
+app.use(express.static(path.resolve(process.cwd(), 'public')));
 
 // Ensure data directory exists safely
 try {
@@ -59,6 +60,9 @@ const DEFAULT_PRODUCT = {
     '/src/assets/images/lumora_magnetic_mount_1792262011714.jpg',
     '/src/assets/images/lumora_usbc_charging_1792262012537.jpg'
   ],
+  platformVideoUrl: '/assets/videos/luminaria_lumora_demonstracao.mp4',
+  youtubeVideoUrl: 'https://www.youtube.com/watch?v=L24CqW2Hx34',
+  youtubeVideoTitle: 'Demonstração da Luminária LED Recarregável com Sensor de Movimento',
   updatedAt: new Date().toISOString()
 };
 
@@ -487,7 +491,21 @@ app.get('/api/product', (req, res) => {
 // 2. Product Update (Admin)
 app.put('/api/admin/product', requireAdmin, (req, res) => {
   const db = getDb();
-  const { name, tagline, price, stock, inStock, isActive, description, features, specs, images } = req.body;
+  const {
+    name,
+    tagline,
+    price,
+    stock,
+    inStock,
+    isActive,
+    description,
+    features,
+    specs,
+    images,
+    platformVideoUrl,
+    youtubeVideoUrl,
+    youtubeVideoTitle
+  } = req.body;
 
   if (price !== undefined && (typeof price !== 'number' || price < 0)) {
     res.status(400).json({ error: 'Preço inválido' });
@@ -506,11 +524,35 @@ app.put('/api/admin/product', requireAdmin, (req, res) => {
     ...(features !== undefined && { features }),
     ...(specs !== undefined && { specs }),
     ...(images !== undefined && { images }),
+    ...(platformVideoUrl !== undefined && { platformVideoUrl }),
+    ...(youtubeVideoUrl !== undefined && { youtubeVideoUrl }),
+    ...(youtubeVideoTitle !== undefined && { youtubeVideoTitle }),
     updatedAt: new Date().toISOString()
   };
 
   saveDb(db);
   res.json({ success: true, product: db.product });
+});
+
+// YouTube API Proxy / Info
+app.get('/api/youtube/info', async (req, res) => {
+  try {
+    const videoUrl = req.query.url as string;
+    if (!videoUrl) {
+      res.status(400).json({ error: 'URL do vídeo é obrigatória' });
+      return;
+    }
+    const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(videoUrl)}&format=json`;
+    const response = await fetch(oembedUrl);
+    if (!response.ok) {
+      res.status(400).json({ error: 'Vídeo do YouTube não encontrado ou não acessível' });
+      return;
+    }
+    const data = await response.json();
+    res.json(data);
+  } catch (err: any) {
+    res.status(500).json({ error: 'Erro ao conectar à API do YouTube', details: err?.message });
+  }
 });
 
 // 3. Delivery Zones

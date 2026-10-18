@@ -32,6 +32,9 @@ export interface Product {
   features: string[];
   specs: ProductSpec[];
   images: string[];
+  platformVideoUrl?: string;
+  youtubeVideoUrl?: string;
+  youtubeVideoTitle?: string;
   updatedAt: string;
 }
 

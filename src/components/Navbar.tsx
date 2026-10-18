@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, Menu, X, Shield, Search, ShoppingBag } from 'lucide-react';
+import { MessageCircle, Menu, X, Shield, Search, ShoppingBag, Play } from 'lucide-react';
 import { StoreSettings, AppTab } from '../types';
 
 interface NavbarProps {
@@ -7,13 +7,15 @@ interface NavbarProps {
   activeTab: AppTab;
   onSelectTab: (tab: AppTab) => void;
   onOpenLogin: () => void;
+  onOpenVideo?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   settings,
   activeTab,
   onSelectTab,
-  onOpenLogin
+  onOpenLogin,
+  onOpenVideo
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -72,6 +74,18 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Primary Actions */}
         <div className="hidden sm:flex items-center gap-3 shrink-0">
+          {onOpenVideo && (
+            <button
+              type="button"
+              onClick={onOpenVideo}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white/90 hover:text-white border border-[#C6A66B]/50 hover:border-[#C6A66B] rounded-md bg-[#C6A66B]/10 hover:bg-[#C6A66B]/20 transition-colors whitespace-nowrap cursor-pointer shadow-sm group"
+              title="Assistir demonstração da luminária na plataforma (sem restrições)"
+            >
+              <Play className="w-3.5 h-3.5 fill-[#C6A66B] text-[#C6A66B] group-hover:scale-110 transition-transform" />
+              <span>Vídeo da Luminária</span>
+            </button>
+          )}
+
           {/* Tracking / Admin Portal Access */}
           <button
             type="button"
@@ -162,6 +176,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
 
           <div className="pt-3 border-t border-white/10 space-y-2">
+            {onOpenVideo && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenVideo();
+                }}
+                className="w-full py-2.5 px-3 rounded-md text-xs font-bold uppercase tracking-wider bg-[#C6A66B]/15 border border-[#C6A66B]/40 text-[#F8F8F6] flex items-center justify-center gap-2 hover:bg-[#C6A66B]/25 transition-colors cursor-pointer"
+              >
+                <Play className="w-4 h-4 fill-[#C6A66B] text-[#C6A66B]" />
+                <span>Ver Vídeo da Luminária (Sem Restrições)</span>
+              </button>
+            )}
             <button
               type="button"
               onClick={() => {
