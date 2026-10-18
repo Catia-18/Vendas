@@ -14,13 +14,15 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { PoliciesModal } from './components/PoliciesModal';
 import { LoginModal } from './components/LoginModal';
 import { YouTubeVideoModal } from './components/YouTubeVideoModal';
+import { VideoGallerySection } from './components/VideoGallerySection';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck } from 'lucide-react';
 
 import {
   INITIAL_PRODUCT,
   INITIAL_DELIVERY_ZONES,
-  INITIAL_SETTINGS
+  INITIAL_SETTINGS,
+  DEFAULT_LUMINARIA_VIDEOS
 } from './data/defaultStore';
 
 export default function App() {
@@ -35,6 +37,7 @@ export default function App() {
 
   // Modals & Authentication
   const [isVideoModalOpen, setIsVideoModalOpen] = useState<boolean>(false);
+  const [selectedVideoId, setSelectedVideoId] = useState<string>('vid-apresentacao');
   const [orderResult, setOrderResult] = useState<OrderConfirmationResult | null>(null);
   const [activePolicyKey, setActivePolicyKey] = useState<
     'terms' | 'privacy' | 'delivery' | 'returns' | null
@@ -44,6 +47,13 @@ export default function App() {
     localStorage.getItem('lumora_admin_token')
   );
   const [isAdminView, setIsAdminView] = useState<boolean>(false);
+
+  const handleOpenVideo = (videoId?: string) => {
+    if (videoId) {
+      setSelectedVideoId(videoId);
+    }
+    setIsVideoModalOpen(true);
+  };
 
   // Load store data
   const loadStoreData = async () => {
@@ -163,7 +173,7 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
         onOpenLogin={handleOpenLogin}
-        onOpenVideo={() => setIsVideoModalOpen(true)}
+        onOpenVideo={() => handleOpenVideo()}
       />
 
       {/* Main Content: Shows strictly the selected tab */}
@@ -177,7 +187,17 @@ export default function App() {
                 setActiveTab(tab);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              onOpenVideo={() => setIsVideoModalOpen(true)}
+              onOpenVideo={() => handleOpenVideo()}
+            />
+
+            {/* Video Showcase Section (5 Distinct Videos in Portuguese, zero restrictions) */}
+            <VideoGallerySection
+              videos={product?.videos || DEFAULT_LUMINARIA_VIDEOS}
+              onSelectVideo={(vidId) => handleOpenVideo(vidId)}
+              onGoToCheckout={() => {
+                setActiveTab('checkout');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
 
             {/* Quick Explore Chapters on Home */}
@@ -278,14 +298,22 @@ export default function App() {
 
         {/* Tab 2: O Produto */}
         {activeTab === 'product' && (
-          <div className="animate-in fade-in duration-150">
+          <div className="animate-in fade-in duration-150 space-y-0">
             <ProductGallery
               product={product}
               onSelectTab={(tab) => {
                 setActiveTab(tab);
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              onOpenVideo={() => setIsVideoModalOpen(true)}
+              onOpenVideo={(vidId) => handleOpenVideo(vidId)}
+            />
+            <VideoGallerySection
+              videos={product?.videos || DEFAULT_LUMINARIA_VIDEOS}
+              onSelectVideo={(vidId) => handleOpenVideo(vidId)}
+              onGoToCheckout={() => {
+                setActiveTab('checkout');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
             />
           </div>
         )}
@@ -333,11 +361,13 @@ export default function App() {
       {/* Floating WhatsApp Action */}
       <FloatingWhatsApp whatsappNumber={settings.whatsappNumber} />
 
-      {/* Interactive Video Modal (Platform Native + YouTube API) */}
+      {/* Interactive Video Modal (Platform Native + YouTube API) with 5 Distinct Videos */}
       <YouTubeVideoModal
         isOpen={isVideoModalOpen}
+        videos={product?.videos || DEFAULT_LUMINARIA_VIDEOS}
+        initialVideoId={selectedVideoId}
         videoUrl={product?.youtubeVideoUrl || 'https://www.youtube.com/watch?v=L24CqW2Hx34'}
-        platformVideoUrl={product?.platformVideoUrl || '/assets/videos/luminaria_lumora_demonstracao.mp4'}
+        platformVideoUrl={product?.platformVideoUrl || '/assets/videos/luminaria_video_1_apresentacao.mp4'}
         productName={product?.name}
         onClose={() => setIsVideoModalOpen(false)}
         onGoToCheckout={() => {

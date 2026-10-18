@@ -70,13 +70,13 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab, onOpenVideo })
                 <button
                   type="button"
                   onClick={onOpenVideo}
-                  className="inline-flex justify-center items-center gap-2.5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#F8F8F6] hover:text-[#C6A66B] bg-[#C6A66B]/10 hover:bg-[#C6A66B]/20 border border-[#C6A66B]/40 hover:border-[#C6A66B] transition-all rounded-md shadow group cursor-pointer"
-                  title="Assistir ao vídeo da luminária na plataforma (sem restrições)"
+                  className="inline-flex justify-center items-center gap-2.5 px-6 py-4 text-xs font-bold uppercase tracking-wider text-[#F8F8F6] hover:text-[#C6A66B] bg-[#C6A66B]/15 hover:bg-[#C6A66B]/25 border border-[#C6A66B]/50 hover:border-[#C6A66B] transition-all rounded-md shadow group cursor-pointer"
+                  title="Assistir aos 5 vídeos demonstrativos da luminária na plataforma (sem restrições)"
                 >
                   <span className="w-6 h-6 rounded-full bg-[#C6A66B] text-[#17191C] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                     <Play className="w-3 h-3 fill-[#17191C] translate-x-0.5" />
                   </span>
-                  <span>Ver Vídeo da Luminária</span>
+                  <span>Ver 5 Vídeos da Luminária</span>
                 </button>
               )}
 
@@ -143,7 +143,7 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab, onOpenVideo })
 
                   <div className="px-4 py-1.5 rounded-full bg-[#17191C]/90 backdrop-blur-md border border-[#C6A66B]/50 text-xs font-bold text-[#F8F8F6] shadow-xl flex items-center gap-2 group-hover:border-[#C6A66B] transition-colors">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    <span>Clica na Luminária para Ver o Vídeo</span>
+                    <span>Ver 5 Vídeos Demonstrativos na Plataforma</span>
                   </div>
                 </div>
               </div>
@@ -151,21 +151,21 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab, onOpenVideo })
               {/* Bottom Details Tag */}
               <div className="absolute bottom-4 left-4 right-4 p-4 bg-[#17191C]/90 backdrop-blur-md rounded-xl border border-white/10 text-xs pointer-events-auto">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-[#F8F8F6]">Aplicação em Roupeiro & Closet</span>
+                  <span className="font-semibold text-[#F8F8F6]">Testes Reais em Armário, Cozinha & Escadas</span>
                   <span className="text-[#C6A66B] font-mono text-[11px] px-2 py-0.5 rounded bg-[#C6A66B]/15 border border-[#C6A66B]/30">
-                    Sensor Inteligente
+                    5 Vídeos Disponíveis
                   </span>
                 </div>
                 <p className="text-[11px] text-[#F8F8F6]/70 mt-1">
-                  Acende suavemente ao abrir a porta ou ao aproximar a mão
+                  Confira instalação magnética sem furos, teste do sensor no escuro e autonomia USB-C
                 </p>
                 <div className="mt-3 pt-2 border-t border-white/10 flex justify-between items-center text-[11px]">
                   <span className="text-white/80 flex items-center gap-1.5">
                     <Play className="w-3 h-3 text-[#C6A66B] fill-[#C6A66B]" />
-                    <span>Vídeo disponível na plataforma (Sem Restrições)</span>
+                    <span>Vídeos na plataforma (100% Sem Restrições)</span>
                   </span>
                   <span className="text-[#C6A66B] font-semibold hover:underline flex items-center gap-1">
-                    <span>Assistir Agora</span>
+                    <span>Assistir Todos</span>
                     <ArrowRight className="w-3 h-3" />
                   </span>
                 </div>

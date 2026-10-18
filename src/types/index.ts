@@ -19,6 +19,20 @@ export interface ProductSpec {
   needsConfirmation?: boolean;
 }
 
+export interface LuminariaVideo {
+  id: string;
+  title: string;
+  shortTitle: string;
+  category: string;
+  durationFormatted: string;
+  description: string;
+  keyBenefits: string[];
+  thumbnail: string;
+  platformVideoUrl: string;
+  youtubeVideoUrl: string;
+  youtubeId: string;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -32,6 +46,7 @@ export interface Product {
   features: string[];
   specs: ProductSpec[];
   images: string[];
+  videos?: LuminariaVideo[];
   platformVideoUrl?: string;
   youtubeVideoUrl?: string;
   youtubeVideoTitle?: string;
