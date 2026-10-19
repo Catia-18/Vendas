@@ -1,14 +1,14 @@
-import { Product, DeliveryZone, StoreSettings, Order, LuminariaVideo } from '../types';
+import { Product, DeliveryZone, StoreSettings, Order, LuminariaVideo, CustomerTestimonial } from '../types';
 
 export const DEFAULT_LUMINARIA_VIDEOS: LuminariaVideo[] = [
   {
     id: 'vid-apresentacao',
-    title: 'Apresentação & Design UltraSlim em Alumínio',
+    title: 'Apresentação & Design da Luminária LED Recarregável',
     shortTitle: 'Visão Geral & Design',
-    category: 'Demonstração Geral',
+    category: 'Luminária LED Recarregável',
     durationFormatted: '0:12',
-    description: 'Conheça o acabamento premium em alumínio fosco, perfil ultra-fino de 9mm e iluminação difusa suave anti-reflexo.',
-    keyBenefits: ['Perfil ultrafino de 9mm', 'Corpo em liga de alumínio', 'Luz difusa sem encandear'],
+    description: 'Conheça em detalhes a barra de LED recarregável inteligente: corpo ultrafino de 9mm em alumínio, lente do sensor PIR e 3 temperaturas de cor (3000K, 4000K e 6000K).',
+    keyBenefits: ['Perfil ultrafino de 9mm em alumínio', '3 temperaturas de cor ajustáveis', 'Luz difusa anti-encandeamento'],
     thumbnail: '/assets/images/product_lumora_isolated_1792262011015.jpg',
     platformVideoUrl: '/assets/videos/luminaria_video_1_apresentacao.mp4',
     youtubeVideoUrl: 'https://www.youtube.com/watch?v=L24CqW2Hx34',
@@ -16,55 +16,55 @@ export const DEFAULT_LUMINARIA_VIDEOS: LuminariaVideo[] = [
   },
   {
     id: 'vid-instalacao',
-    title: 'Instalação Magnética em 5 Segundos (Sem Furos)',
-    shortTitle: 'Instalação sem Obras',
-    category: 'Instalação Rápida',
+    title: 'Instalação Magnética em 5 Segundos sem Furos',
+    shortTitle: 'Instalação sem Furar',
+    category: 'Instalação Magnética',
     durationFormatted: '0:12',
-    description: 'Veja como fixar as bases magnéticas 3M em armários, madeira ou parede sem furar nem usar ferramentas.',
-    keyBenefits: ['Zero furos na parede', 'Adesivo 3M extra-forte', 'Desencaixe magnético com 1 mão'],
+    description: 'Veja como fixar as bases magnéticas com fita adesiva 3M em armários, roupeiros, madeira ou paredes sem furar e com encaixe magnético instantâneo.',
+    keyBenefits: ['Zero furos na parede ou móveis', 'Adesivo 3M de alta resistência', 'Desencaixe magnético com 1 mão'],
     thumbnail: '/assets/images/lumora_magnetic_mount_1792262011714.jpg',
     platformVideoUrl: '/assets/videos/luminaria_video_2_instalacao.mp4',
-    youtubeVideoUrl: 'https://www.youtube.com/watch?v=UK2Q03gQ1Bo',
-    youtubeId: 'UK2Q03gQ1Bo'
+    youtubeVideoUrl: 'https://www.youtube.com/watch?v=FEuwvYwy8hM',
+    youtubeId: 'FEuwvYwy8hM'
   },
   {
     id: 'vid-sensor-bateria',
-    title: 'Sensor Inteligente PIR no Escuro & Bateria USB-C',
+    title: 'Sensor de Movimento PIR no Escuro & Bateria USB-C',
     shortTitle: 'Sensor PIR & Bateria',
-    category: 'Tecnologia & Autonomia',
+    category: 'Sensor & Bateria USB-C',
     durationFormatted: '0:12',
-    description: 'Teste real de detecção automática a 3 metros no escuro, ângulo 120° e autonomia de até 60 dias com recarga rápida tipo C.',
-    keyBenefits: ['Detecção PIR 120° até 3m', 'Bateria recarregável USB-C', 'Até 60 dias de autonomia'],
+    description: 'Teste real de acendimento automático no escuro: detecção PIR em ângulo de 120° até 3 metros e bateria recarregável USB-C com até 60 dias de autonomia.',
+    keyBenefits: ['Sensor PIR com detecção em 0,1s', 'Bateria recarregável via USB-C', 'Até 60 dias no modo automático'],
     thumbnail: '/assets/images/lumora_usbc_charging_1792262012537.jpg',
     platformVideoUrl: '/assets/videos/luminaria_video_3_sensor_bateria.mp4',
-    youtubeVideoUrl: 'https://www.youtube.com/watch?v=rxdJpwe3MCk',
-    youtubeId: 'rxdJpwe3MCk'
+    youtubeVideoUrl: 'https://www.youtube.com/watch?v=I_eeP-jxg1o',
+    youtubeId: 'I_eeP-jxg1o'
   },
   {
     id: 'vid-cozinha',
-    title: 'Iluminação Prática na Cozinha e Bancadas Gourmet',
+    title: 'Luminária LED Sob Armários de Cozinha e Bancadas',
     shortTitle: 'Cozinha & Bancadas',
-    category: 'Cozinha & Armários',
+    category: 'Cozinha & Sob Armários',
     durationFormatted: '0:12',
-    description: 'Iluminação focada sob armários aéreos de cozinha para preparação de alimentos e refeições com conforto visual.',
-    keyBenefits: ['Sem sombras na bancada', 'Instalação sob armários', '3 temperaturas de cor'],
+    description: 'Iluminação homogênea sob os armários aéreos para preparação de alimentos sem sombras, dispensando fiações elétricas e tomadas por perto.',
+    keyBenefits: ['Bancada bem iluminada sem sombras', 'Sem fios nem tomadas na bancada', 'Modo iluminação contínua (ON)'],
     thumbnail: '/assets/images/lumora_kitchen_undercabinet_1792359686505.jpg',
     platformVideoUrl: '/assets/videos/luminaria_video_4_cozinha_bancada.mp4',
-    youtubeVideoUrl: 'https://www.youtube.com/watch?v=Qv6jJUkKf88',
-    youtubeId: 'Qv6jJUkKf88'
+    youtubeVideoUrl: 'https://www.youtube.com/watch?v=JAbIeNqQnow',
+    youtubeId: 'JAbIeNqQnow'
   },
   {
     id: 'vid-seguranca-escadas',
-    title: 'Luz de Segurança Noturna para Escadas e Corredores',
+    title: 'Luz Noturna de Segurança para Escadas e Corredores',
     shortTitle: 'Escadas & Corredores',
     category: 'Segurança Noturna',
     durationFormatted: '0:12',
-    description: 'Evite tropeções e acidentes noturnos. Acendimento automático e suave para crianças e idosos sem ofuscar os olhos.',
-    keyBenefits: ['Segurança para idosos e crianças', 'Luz de vigia noturna', 'Desliga sozinho após 20s'],
+    description: 'Acendimento automático e suave ao passar por corredores ou descer escadas à noite. Evita tropeções para idosos e crianças sem ofuscar a visão.',
+    keyBenefits: ['Passagem noturna segura e automática', 'Luz acolhedora para os olhos', 'Desliga sozinho após 20 segundos'],
     thumbnail: '/assets/images/lumora_staircase_night_1792359733537.jpg',
     platformVideoUrl: '/assets/videos/luminaria_video_5_escadas_corredor.mp4',
-    youtubeVideoUrl: 'https://www.youtube.com/watch?v=hbjCuF7BEx8',
-    youtubeId: 'hbjCuF7BEx8'
+    youtubeVideoUrl: 'https://www.youtube.com/watch?v=cBdeOHrVFP0',
+    youtubeId: 'cBdeOHrVFP0'
   }
 ];
 
@@ -419,5 +419,98 @@ export const INITIAL_ORDERS: Order[] = [
     ],
     createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
     updatedAt: new Date(Date.now() - 3600000 * 24).toISOString()
+  }
+];
+
+export const DEFAULT_TESTIMONIALS: CustomerTestimonial[] = [
+  {
+    id: 'testim-1',
+    name: 'Ana Paula Silva',
+    location: 'Centralidade do Kilamba, Luanda',
+    rating: 5,
+    date: 'Há 3 dias',
+    verifiedPurchase: true,
+    initials: 'AS',
+    title: 'Transformou por completo o meu roupeiro de 6 portas!',
+    comment: 'Instalei dentro do meu roupeiro de quarto. Antes tinha de ligar a lanterna do telemóvel para conseguir escolher a roupa de manhã sem acordar o meu marido. Agora, mal abro a porta, a luz acende com uma suavidade incrível! O íman prende muito bem e a bateria dura semanas a fio no modo sensor.',
+    useCase: 'roupeiro',
+    useCaseLabel: 'Roupeiro & Closet',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 28
+  },
+  {
+    id: 'testim-2',
+    name: 'Eng. Mário dos Santos',
+    location: 'Talatona (Condomínio Rosalinda), Luanda',
+    rating: 5,
+    date: 'Há 6 dias',
+    verifiedPurchase: true,
+    initials: 'MS',
+    title: 'Acabamento em alumínio de luxo e salva nos cortes de energia',
+    comment: 'Comprei 3 unidades para a bancada da cozinha e para o corredor dos quartos. A qualidade do alumínio anodizado é surpreendente. Quando há falha da rede eléctrica, a casa não fica às escuras porque as luminárias têm bateria própria e acendem logo que nos movimentamos. Recarrega fácil por USB-C.',
+    useCase: 'cozinha',
+    useCaseLabel: 'Cozinha & Bancada',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 42
+  },
+  {
+    id: 'testim-3',
+    name: 'Dra. Teresa Van-Dúnem',
+    location: 'Maianga, Luanda',
+    rating: 5,
+    date: 'Há 1 semana',
+    verifiedPurchase: true,
+    initials: 'TV',
+    title: 'Segurança absoluta para os meus filhos durante a noite',
+    comment: 'Tenho duas crianças que acordam muitas vezes para beber água ou ir à casa de banho. Coloquei duas barras no rodapé do corredor e junto aos primeiros degraus das escadas. O sensor PIR tem uma resposta imediata e um ângulo largo de 120°. Nunca mais tropeçaram no escuro. Entrega em 24h em Luanda impecável.',
+    useCase: 'sensor_noturno',
+    useCaseLabel: 'Sensor Noturno & Escadas',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 19
+  },
+  {
+    id: 'testim-4',
+    name: 'Carlos Alberto Fernandes',
+    location: 'Benguela (Lobito)',
+    rating: 5,
+    date: 'Há 2 semanas',
+    verifiedPurchase: true,
+    initials: 'CF',
+    title: 'Envio rápido para a província e os 3 tons de luz são perfeitos',
+    comment: 'Mandei vir para Benguela e a encomenda chegou muito bem embalada e rápida. A possibilidade de mudar entre luz quente (3000K), neutra (4000K) e branca fria (6000K) com um simples toque é fantástica. No quarto uso a quente e na despensa a branca. Aprovado!',
+    useCase: 'geral',
+    useCaseLabel: 'Despensa & Quarto',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 15
+  },
+  {
+    id: 'testim-5',
+    name: 'Beatriz Fernandes',
+    location: 'Benfica / Morro Bento, Luanda',
+    rating: 5,
+    date: 'Há 2 semanas',
+    verifiedPurchase: true,
+    initials: 'BF',
+    title: 'Zero furos nas paredes! Fixação magnética genial',
+    comment: 'Moro numa casa alugada e o senhorio não permite furar azulejos ou armários. Com a LUMORA colei as duas chapas metálicas 3M e em 10 segundos estava instalada. Quando preciso carregar, é só puxar a barra do íman sem descolar a fita. Muito prático e elegante.',
+    useCase: 'escadas_corredor',
+    useCaseLabel: 'Instalação Sem Furos',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 33
+  },
+  {
+    id: 'testim-6',
+    name: 'Domingos Cassoma',
+    location: 'Nova Vida / Kilamba Kiaxi, Luanda',
+    rating: 5,
+    date: 'Há 3 semanas',
+    verifiedPurchase: true,
+    initials: 'DC',
+    title: 'Excelente atendimento e pagamento no acto por TPA',
+    comment: 'Paguei por Multicaixa TPA quando o estafeta chegou ao meu portão. Testei a luminária com ele antes de pagar e funcionou perfeitamente. Uso na minha bancada de trabalho no escritório. Dá uma luz nítida e sem reflexos cansativos. Excelente investimento.',
+    useCase: 'geral',
+    useCaseLabel: 'Escritório & Trabalho',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 21
   }
 ];

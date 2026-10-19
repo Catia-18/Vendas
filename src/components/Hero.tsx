@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Truck, ShieldCheck, Zap, Check, Play } from 'lucide-react';
+import { ArrowRight, Truck, ShieldCheck, Zap, Check, Play, Star } from 'lucide-react';
 import { Product, AppTab } from '../types';
 
 interface HeroProps {
@@ -18,12 +18,32 @@ export const Hero: React.FC<HeroProps> = ({ product, onSelectTab, onOpenVideo })
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Copy & Actions */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="flex items-center gap-2 text-xs font-semibold text-[#C6A66B] uppercase tracking-wider">
-              <span>LUMORA</span>
-              <span aria-hidden="true">·</span>
-              <span>Iluminação Inteligente</span>
-              <span aria-hidden="true">·</span>
-              <span>Angola</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2 text-xs font-semibold text-[#C6A66B] uppercase tracking-wider">
+                <span>LUMORA</span>
+                <span aria-hidden="true">·</span>
+                <span>Iluminação Inteligente</span>
+                <span aria-hidden="true">·</span>
+                <span>Angola</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onSelectTab('testimonials')}
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#C6A66B]/50 transition-all text-xs cursor-pointer group"
+                title="Ver todas as avaliações e depoimentos de clientes em Angola"
+              >
+                <div className="flex items-center gap-0.5 text-[#C6A66B]">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3 h-3 fill-[#C6A66B]" />
+                  ))}
+                </div>
+                <span className="font-bold text-white text-[11px]">4.9</span>
+                <span className="text-white/40 text-[10px]">•</span>
+                <span className="text-white/70 group-hover:text-white transition-colors text-[11px]">
+                  380+ Depoimentos de Clientes
+                </span>
+              </button>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display tracking-tight text-[#F8F8F6] leading-[1.15] text-balance">

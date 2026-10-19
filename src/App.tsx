@@ -15,8 +15,9 @@ import { PoliciesModal } from './components/PoliciesModal';
 import { LoginModal } from './components/LoginModal';
 import { YouTubeVideoModal } from './components/YouTubeVideoModal';
 import { VideoGallerySection } from './components/VideoGallerySection';
+import { TestimonialsSection } from './components/TestimonialsSection';
 import { AdminDashboard } from './components/admin/AdminDashboard';
-import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck } from 'lucide-react';
+import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck, Star } from 'lucide-react';
 
 import {
   INITIAL_PRODUCT,
@@ -24,6 +25,7 @@ import {
   INITIAL_SETTINGS,
   DEFAULT_LUMINARIA_VIDEOS
 } from './data/defaultStore';
+import { seedFirestoreIfEmpty } from './services/firestoreService';
 
 export default function App() {
   const [product, setProduct] = useState<Product>(INITIAL_PRODUCT);
@@ -77,6 +79,7 @@ export default function App() {
 
   useEffect(() => {
     loadStoreData();
+    seedFirestoreIfEmpty().catch((err) => console.warn('[Firestore] Seed check:', err));
   }, []);
 
   // Verify saved admin session on boot
@@ -200,6 +203,18 @@ export default function App() {
               }}
             />
 
+            {/* Customer Testimonials & Reviews Section */}
+            <TestimonialsSection
+              onGoToCheckout={() => {
+                setActiveTab('checkout');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onSelectTab={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+
             {/* Quick Explore Chapters on Home */}
             <section className="py-16 bg-white border-b border-[#E4E4E7]">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -211,11 +226,11 @@ export default function App() {
                     Explora a Experiência LUMORA
                   </h2>
                   <p className="text-sm text-[#52525B] mt-2">
-                    Clica nas secções acima ou nos atalhos abaixo para consultar especificações, benefícios ou finalizar a tua encomenda.
+                    Clica nas secções acima ou nos atalhos abaixo para consultar especificações, depoimentos de clientes ou finalizar a tua encomenda.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {/* Card 1: O Produto */}
                   <div
                     onClick={() => {
@@ -266,7 +281,32 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Card 3: Checkout */}
+                  {/* Card 3: Depoimentos */}
+                  <div
+                    onClick={() => {
+                      setActiveTab('testimonials');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className="p-6 rounded-xl border border-[#E4E4E7] bg-[#F8F8F6] hover:border-[#C6A66B] hover:shadow-md transition-all cursor-pointer group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-10 h-10 rounded-lg bg-[#17191C] text-[#C6A66B] flex items-center justify-center mb-4">
+                        <Star className="w-5 h-5 fill-[#C6A66B]" />
+                      </div>
+                      <h3 className="font-bold text-base text-[#17191C] group-hover:text-[#C6A66B] transition-colors">
+                        Avaliações de Clientes
+                      </h3>
+                      <p className="text-xs text-[#52525B] mt-2 leading-relaxed">
+                        Classificação 4.9/5 estrelas baseada em mais de 380 clientes satisfeitos em Luanda e províncias.
+                      </p>
+                    </div>
+                    <div className="mt-5 pt-3 border-t border-[#E4E4E7] flex items-center justify-between text-xs font-semibold text-[#17191C]">
+                      <span>Ler Experiências</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+
+                  {/* Card 4: Checkout */}
                   <div
                     onClick={() => {
                       setActiveTab('checkout');
@@ -282,7 +322,7 @@ export default function App() {
                         Fazer Encomenda Imediata
                       </h3>
                       <p className="text-xs text-white/70 mt-2 leading-relaxed">
-                        Preenche os teus dados de entrega em Luanda ou províncias. Paga na entrega, por transferência ou cartão Stripe.
+                        Preenche os teus dados de entrega em Luanda ou províncias. Paga na entrega por TPA ou transferência segura.
                       </p>
                     </div>
                     <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-[#C6A66B]">
@@ -315,6 +355,16 @@ export default function App() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             />
+            <TestimonialsSection
+              onGoToCheckout={() => {
+                setActiveTab('checkout');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onSelectTab={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
           </div>
         )}
 
@@ -332,14 +382,30 @@ export default function App() {
           </div>
         )}
 
-        {/* Tab 5: Perguntas Frequentes */}
+        {/* Tab 5: Depoimentos de Clientes */}
+        {activeTab === 'testimonials' && (
+          <div className="animate-in fade-in duration-150">
+            <TestimonialsSection
+              onGoToCheckout={() => {
+                setActiveTab('checkout');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onSelectTab={(tab) => {
+                setActiveTab(tab);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </div>
+        )}
+
+        {/* Tab 6: Perguntas Frequentes */}
         {activeTab === 'faq' && (
           <div className="animate-in fade-in duration-150">
             <FaqSection faqs={settings.faqs || []} />
           </div>
         )}
 
-        {/* Tab 6: Fazer Encomenda */}
+        {/* Tab 7: Fazer Encomenda */}
         {activeTab === 'checkout' && (
           <div className="animate-in fade-in duration-150">
             <CheckoutForm
@@ -356,6 +422,10 @@ export default function App() {
         settings={settings}
         onOpenPolicy={(policy) => setActivePolicyKey(policy)}
         onOpenAdmin={handleOpenLogin}
+        onSelectTab={(tab) => {
+          setActiveTab(tab);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
       />
 
       {/* Floating WhatsApp Action */}

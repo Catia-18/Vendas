@@ -1,14 +1,20 @@
 import React from 'react';
-import { StoreSettings } from '../types';
-import { MessageCircle, Mail, MapPin, Shield } from 'lucide-react';
+import { StoreSettings, AppTab } from '../types';
+import { MessageCircle, Mail, MapPin, Shield, Star, Play, Sparkles } from 'lucide-react';
 
 interface FooterProps {
   settings: StoreSettings | null;
   onOpenPolicy: (policyKey: 'terms' | 'privacy' | 'delivery' | 'returns') => void;
   onOpenAdmin: () => void;
+  onSelectTab?: (tab: AppTab) => void;
 }
 
-export const Footer: React.FC<FooterProps> = ({ settings, onOpenPolicy, onOpenAdmin }) => {
+export const Footer: React.FC<FooterProps> = ({
+  settings,
+  onOpenPolicy,
+  onOpenAdmin,
+  onSelectTab
+}) => {
   const whatsappHref = settings?.whatsappNumber
     ? `https://wa.me/${settings.whatsappNumber.replace(/[^0-9]/g, '')}`
     : '#';
@@ -27,8 +33,20 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenPolicy, onOpenAd
               {settings?.slogan || 'Iluminação inteligente. Mais conforto no teu dia.'}
             </p>
             <p className="text-[#F8F8F6]/50 text-[11px] leading-relaxed">
-              Marca angolana focada em soluções práticas, tecnológicas e elegantes para o conforto da tua casa.
+              Marca angolana focada em soluções práticas, tecnológicas e elegantes para o conforto da tua casa. Luminária LED recarregável com sensor de movimento inteligente.
             </p>
+            {onSelectTab && (
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => onSelectTab('testimonials')}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#C6A66B]/15 hover:bg-[#C6A66B]/25 text-[#C6A66B] text-[11px] font-semibold border border-[#C6A66B]/40 transition-colors"
+                >
+                  <Star className="w-3.5 h-3.5 fill-[#C6A66B]" />
+                  <span>Ver Depoimentos de Clientes</span>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Col 2: Legal & Policies */}
@@ -73,6 +91,20 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenPolicy, onOpenAd
                   Política de Trocas e Devoluções
                 </button>
               </li>
+              {onSelectTab && (
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => onSelectTab('testimonials')}
+                    className="hover:text-[#C6A66B] text-[#F8F8F6]/90 font-medium transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <span>Avaliações de Clientes</span>
+                    <span className="px-1.5 py-0.2 bg-[#C6A66B]/20 text-[#C6A66B] text-[10px] rounded font-bold">
+                      Novo
+                    </span>
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
 
@@ -130,12 +162,14 @@ export const Footer: React.FC<FooterProps> = ({ settings, onOpenPolicy, onOpenAd
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#F8F8F6]/50">
-          <div>
-            © {new Date().getFullYear()} LUMORA Angola. Todos os direitos reservados.
+        {/* Bottom Bar: Todos os direitos reservados a Cátia Catumbela */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#F8F8F6]/70">
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-center sm:text-left">
+            <span>© {new Date().getFullYear()} LUMORA.</span>
+            <span className="text-[#F8F8F6] font-medium">Todos os direitos reservados a Cátia Catumbela.</span>
           </div>
-          <div>
+
+          <div className="text-[#F8F8F6]/50 text-center sm:text-right">
             Moeda Oficial: Kwanza Angolano (Kz / AOA)
           </div>
         </div>

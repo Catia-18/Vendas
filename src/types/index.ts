@@ -11,7 +11,24 @@ export type PaymentStatus = 'pending' | 'paid' | 'cancelled';
 
 export type PaymentMethodType = 'cash_on_delivery' | 'bank_transfer' | 'stripe';
 
-export type AppTab = 'home' | 'product' | 'benefits' | 'how_it_works' | 'faq' | 'checkout';
+export type AppTab = 'home' | 'product' | 'benefits' | 'how_it_works' | 'testimonials' | 'faq' | 'checkout';
+
+export interface CustomerTestimonial {
+  id: string;
+  name: string;
+  location: string;
+  rating: number;
+  date: string;
+  verifiedPurchase: boolean;
+  avatar?: string;
+  initials: string;
+  title: string;
+  comment: string;
+  useCase: 'roupeiro' | 'cozinha' | 'sensor_noturno' | 'escadas_corredor' | 'geral';
+  useCaseLabel: string;
+  productModel?: string;
+  helpfulCount?: number;
+}
 
 export interface ProductSpec {
   label: string;

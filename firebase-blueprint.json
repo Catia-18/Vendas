@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "LUMORA LED lamp product details and catalog item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "tagline": { "type": "string" },
+        "price": { "type": "number" },
+        "currency": { "type": "string" },
+        "stock": { "type": "number" },
+        "inStock": { "type": "boolean" },
+        "isActive": { "type": "boolean" },
+        "description": { "type": "string" },
+        "features": { "type": "array" },
+        "specs": { "type": "array" },
+        "images": { "type": "array" },
+        "videos": { "type": "array" },
+        "platformVideoUrl": { "type": "string" },
+        "youtubeVideoUrl": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "name", "price", "currency", "stock", "inStock", "isActive"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order placed in Angola for LUMORA LED lamp",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "province": { "type": "string" },
+        "municipality": { "type": "string" },
+        "neighborhood": { "type": "string" },
+        "address": { "type": "string" },
+        "referencePoint": { "type": "string" },
+        "notes": { "type": "string" },
+        "quantity": { "type": "number" },
+        "unitPrice": { "type": "number" },
+        "subtotal": { "type": "number" },
+        "deliveryFee": { "type": "number" },
+        "total": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "orderStatus": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "customerName", "customerPhone", "province", "municipality", "address", "quantity", "unitPrice", "total", "paymentMethod", "orderStatus", "paymentStatus", "createdAt"]
+    },
+    "DeliveryZone": {
+      "title": "DeliveryZone",
+      "description": "Geographical delivery coverage zones in Luanda and Angolan provinces",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "province": { "type": "string" },
+        "municipality": { "type": "string" },
+        "zoneName": { "type": "string" },
+        "fee": { "type": "number" },
+        "estimatedTime": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "notes": { "type": "string" }
+      },
+      "required": ["id", "province", "municipality", "zoneName", "fee", "estimatedTime", "isActive"]
+    },
+    "StoreSettings": {
+      "title": "StoreSettings",
+      "description": "Global store configuration and policies for LUMORA Angola",
+      "type": "object",
+      "properties": {
+        "brandName": { "type": "string" },
+        "slogan": { "type": "string" },
+        "whatsappNumber": { "type": "string" },
+        "whatsappDisplay": { "type": "string" },
+        "email": { "type": "string" },
+        "faqs": { "type": "array" },
+        "policies": { "type": "object" },
+        "paymentMethods": { "type": "array" }
+      },
+      "required": ["brandName", "whatsappNumber"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Customer review and testimonial for LUMORA",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "location": { "type": "string" },
+        "rating": { "type": "number" },
+        "date": { "type": "string" },
+        "verifiedPurchase": { "type": "boolean" },
+        "initials": { "type": "string" },
+        "title": { "type": "string" },
+        "comment": { "type": "string" },
+        "useCase": { "type": "string" },
+        "useCaseLabel": { "type": "string" },
+        "productModel": { "type": "string" },
+        "helpfulCount": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "location", "rating", "title", "comment", "verifiedPurchase"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Catalog products for sale"
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer purchase orders and tracking records"
+    },
+    "/delivery_zones/{zoneId}": {
+      "schema": { "$ref": "#/entities/DeliveryZone" },
+      "description": "Shipping regions and fees"
+    },
+    "/settings/{settingId}": {
+      "schema": { "$ref": "#/entities/StoreSettings" },
+      "description": "Store settings and policy documents"
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": { "$ref": "#/entities/Testimonial" },
+      "description": "Customer reviews and feedback"
+    }
+  }
+}

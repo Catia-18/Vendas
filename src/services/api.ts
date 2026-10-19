@@ -13,6 +13,12 @@ import {
   INITIAL_SETTINGS,
   INITIAL_ORDERS
 } from '../data/defaultStore';
+import {
+  saveOrderToFirestore,
+  getOrderFromFirestore,
+  getProductFromFirestore,
+  seedFirestoreIfEmpty
+} from './firestoreService';
 
 // Helper for local storage persistence when running on static platforms (e.g. Vercel static CDN)
 function getLocalOrders(): Order[] {
@@ -103,10 +109,13 @@ export async function createOrder(payload: CreateOrderPayload): Promise<OrderCon
     });
     if (res.ok) {
       const data = await res.json();
+      if (data && data.order) {
+        saveOrderToFirestore(data.order).catch(() => {});
+      }
       return data;
     }
   } catch (err) {
-    console.warn('Backend /api/orders não respondeu. A processar encomenda com persistência local:', err);
+    console.warn('Backend /api/orders não respondeu. A processar encomenda com Firestore e persistência local:', err);
   }
 
   // Client-side local order processor if backend API is not running (e.g. pure static Vercel)
@@ -169,6 +178,7 @@ export async function createOrder(payload: CreateOrderPayload): Promise<OrderCon
   const currentOrders = getLocalOrders();
   currentOrders.unshift(newOrder);
   saveLocalOrders(currentOrders);
+  saveOrderToFirestore(newOrder).catch(() => {});
 
   const formattedTotal = new Intl.NumberFormat('pt-AO').format(total);
   const paymentLabels: Record<string, string> = {
@@ -253,6 +263,25 @@ export async function trackOrder(query: string): Promise<any> {
   });
 
   if (!found) {
+    try {
+      const cloudOrder = await getOrderFromFirestore(query);
+      if (cloudOrder) {
+        return {
+          id: cloudOrder.id,
+          customerName: cloudOrder.customerName,
+          province: cloudOrder.province,
+          municipality: cloudOrder.municipality,
+          quantity: cloudOrder.quantity,
+          total: cloudOrder.total,
+          paymentMethod: cloudOrder.paymentMethod,
+          orderStatus: cloudOrder.orderStatus,
+          paymentStatus: cloudOrder.paymentStatus,
+          createdAt: cloudOrder.createdAt,
+          updatedAt: cloudOrder.updatedAt,
+          history: cloudOrder.history
+        };
+      }
+    } catch {}
     throw new Error('Nenhuma encomenda encontrada com estes dados.');
   }
 
