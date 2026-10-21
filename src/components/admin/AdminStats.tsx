@@ -68,6 +68,18 @@ export const AdminStats: React.FC<AdminStatsProps> = ({ token }) => {
         </button>
       </div>
 
+      {stats.totalOrders === 0 && (
+        <div className="p-6 bg-slate-50 border border-[#E4E4E7] rounded-xl text-center space-y-2">
+          <div className="w-10 h-10 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center mx-auto">
+            <ShoppingBag className="w-5 h-5" />
+          </div>
+          <h3 className="font-bold text-sm text-[#17191C]">Ainda não existem dados registados</h3>
+          <p className="text-xs text-[#71717A] max-w-md mx-auto">
+            Ainda não foram realizadas encomendas na plataforma. As métricas de receita, ticket médio e volume de vendas serão calculadas e apresentadas automaticamente a partir de transações reais.
+          </p>
+        </div>
+      )}
+
       {/* Primary KPI Strip */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Actual Received Revenue */}

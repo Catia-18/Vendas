@@ -375,76 +375,7 @@ const DEFAULT_SETTINGS = {
   }
 };
 
-const DEFAULT_ORDERS = [
-  {
-    id: 'LMR-10492',
-    customerName: 'Manuel dos Santos Cabral',
-    customerPhone: '+244923112233',
-    province: 'Luanda',
-    municipality: 'Talatona',
-    neighborhood: 'Benfica',
-    address: 'Rua Principal do Benfica, Condomínio Girassol, Casa 14B',
-    referencePoint: 'Próximo à padaria Bela Luanda',
-    notes: 'Ligar antes de chegar, condomínio com portaria',
-    quantity: 2,
-    unitPrice: 29900,
-    subtotal: 59800,
-    deliveryFee: 2500,
-    total: 62300,
-    paymentMethod: 'cash_on_delivery',
-    orderStatus: 'confirmed',
-    paymentStatus: 'pending',
-    internalNotes: 'Cliente confirmou por chamada. Estafeta Rui escalado para entrega amanhã às 14h.',
-    history: [
-      {
-        timestamp: new Date(Date.now() - 3600000 * 20).toISOString(),
-        action: 'Nova encomenda submetida via website'
-      },
-      {
-        timestamp: new Date(Date.now() - 3600000 * 15).toISOString(),
-        action: 'Estado alterado para Confirmada após contacto telefónico'
-      }
-    ],
-    createdAt: new Date(Date.now() - 3600000 * 20).toISOString(),
-    updatedAt: new Date(Date.now() - 3600000 * 15).toISOString()
-  },
-  {
-    id: 'LMR-10488',
-    customerName: 'Esperança de Almeida',
-    customerPhone: '+244912998877',
-    province: 'Luanda',
-    municipality: 'Belas',
-    neighborhood: 'Kilamba',
-    address: 'Quarteirão B, Edifício B12, Apartamento 402',
-    referencePoint: 'Entrada junto à farmácia da rotunda',
-    notes: 'Entregar preferencialmente após as 16h',
-    quantity: 1,
-    unitPrice: 29900,
-    subtotal: 29900,
-    deliveryFee: 3000,
-    total: 32900,
-    paymentMethod: 'bank_transfer',
-    orderStatus: 'delivered',
-    paymentStatus: 'paid',
-    internalNotes: 'Comprovativo BAI verificado com sucesso. Entrega concluída pelo estafeta.',
-    history: [
-      {
-        timestamp: new Date(Date.now() - 3600000 * 48).toISOString(),
-        action: 'Nova encomenda submetida via website'
-      },
-      {
-        timestamp: new Date(Date.now() - 3600000 * 40).toISOString(),
-        action: 'Pagamento confirmado via BAI'
-      },
-      {
-        timestamp: new Date(Date.now() - 3600000 * 24).toISOString(),
-        action: 'Encomenda entregue com sucesso'
-      }
-    ],
-    createdAt: new Date(Date.now() - 3600000 * 48).toISOString(),
-    updatedAt: new Date(Date.now() - 3600000 * 24).toISOString()
-  }
-];
+const DEFAULT_ORDERS: any[] = [];
 
 // In-memory cache for fast access and fallback in read-only environments (like Vercel Serverless)
 let inMemoryDb: any = null;
@@ -470,7 +401,8 @@ function getDb() {
       product: DEFAULT_PRODUCT,
       deliveryZones: DEFAULT_DELIVERY_ZONES,
       settings: DEFAULT_SETTINGS,
-      orders: DEFAULT_ORDERS
+      orders: DEFAULT_ORDERS,
+      testimonials: []
     };
     inMemoryDb = initialData;
     try {
@@ -490,6 +422,7 @@ function getDb() {
       data.settings.paymentMethods.stripe = DEFAULT_SETTINGS.paymentMethods.stripe;
     }
     if (!data.orders) data.orders = DEFAULT_ORDERS;
+    if (!data.testimonials) data.testimonials = [];
     inMemoryDb = data;
     return data;
   } catch (err) {
@@ -498,7 +431,8 @@ function getDb() {
       product: DEFAULT_PRODUCT,
       deliveryZones: DEFAULT_DELIVERY_ZONES,
       settings: DEFAULT_SETTINGS,
-      orders: DEFAULT_ORDERS
+      orders: DEFAULT_ORDERS,
+      testimonials: []
     };
     return inMemoryDb;
   }
@@ -756,7 +690,7 @@ app.post('/api/admin/auth/login', (req, res) => {
   if (passcode === validPass) {
     res.json({ success: true, token: validPass });
   } else {
-    res.status(401).json({ error: 'Palavra-passe de administrador incorrecta' });
+    res.status(401).json({ error: 'Senha incorreta. Tente novamente.' });
   }
 });
 
@@ -764,7 +698,7 @@ app.get('/api/admin/auth/verify', requireAdmin, (req, res) => {
   res.json({ authenticated: true });
 });
 
-// 6. Stripe Payment Intent Creation
+// 6. Stripe Payment Intent Creation (Real processing only - no fake simulated payments)
 app.post('/api/stripe/create-payment-intent', async (req, res) => {
   const db = getDb();
   const { amountKz, customerName, customerPhone } = req.body;
@@ -775,52 +709,102 @@ app.post('/api/stripe/create-payment-intent', async (req, res) => {
   }
 
   const stripeConfig = db.settings.stripeConfig || {};
-  const secretKey =
-    process.env.STRIPE_SECRET_KEY || stripeConfig.secretKey || 'sk_test_51URbpVK';
+  const secretKey = process.env.STRIPE_SECRET_KEY || stripeConfig.secretKey;
+
+  // Transparently check whether Stripe is legitimately configured
+  if (!secretKey || secretKey === 'sk_test_51URbpVK' || secretKey.length < 25) {
+    res.status(400).json({
+      error:
+        'A integração de pagamentos por cartão (Stripe) ainda não está configurada com credenciais válidas. Por favor utilize Pagamento na Entrega ou Transferência Bancária.'
+    });
+    return;
+  }
 
   // Exchange rate: 1 USD ~ 900 AOA (approximate baseline for Angola card processing)
   const usdAmount = Math.max(1, Math.round(amountKz / 900));
   const amountInCents = usdAmount * 100;
 
   try {
-    // If the user has provided a real secret key
-    if (secretKey && secretKey.startsWith('sk_test_') && secretKey.length > 25) {
-      const stripe = new Stripe(secretKey);
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: amountInCents,
-        currency: stripeConfig.currency || 'usd',
-        metadata: {
-          customerName: customerName || 'Cliente LUMORA',
-          customerPhone: customerPhone || '',
-          amountKz: String(amountKz)
-        },
-        description: `Encomenda LUMORA - Luminária LED (${amountKz} Kz)`
-      });
+    const stripe = new Stripe(secretKey);
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amountInCents,
+      currency: stripeConfig.currency || 'usd',
+      metadata: {
+        customerName: customerName || 'Cliente LUMORA',
+        customerPhone: customerPhone || '',
+        amountKz: String(amountKz)
+      },
+      description: `Encomenda LUMORA - Luminária LED (${amountKz} Kz)`
+    });
 
-      res.json({
-        clientSecret: paymentIntent.client_secret,
-        id: paymentIntent.id,
-        amountUsd: usdAmount,
-        publishableKey: stripeConfig.publishableKey || 'pk_test_51URbpVK5OaHHhzp50Sgkh7Etx'
-      });
-      return;
-    }
-
-    // Graceful simulated test intent if key is a prefix or sandbox mode
-    const simulatedIntentId = `pi_sim_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
     res.json({
-      clientSecret: `${simulatedIntentId}_secret_${Math.random().toString(36).substring(2, 10)}`,
-      id: simulatedIntentId,
+      clientSecret: paymentIntent.client_secret,
+      id: paymentIntent.id,
       amountUsd: usdAmount,
-      publishableKey: stripeConfig.publishableKey || 'pk_test_51URbpVK5OaHHhzp50Sgkh7Etx',
-      isSimulated: true
+      publishableKey: stripeConfig.publishableKey
     });
   } catch (err: any) {
     console.error('Stripe error:', err);
     res.status(500).json({
-      error: 'Não foi possível inicializar a ligação com a Stripe. Verifica as tuas chaves no painel administrativo.'
+      error: `Erro ao comunicar com a Stripe: ${err.message || 'Falha de ligação.'}`
     });
   }
+});
+
+// 6b. Testimonials / Avaliações Reais (Public Read & Create)
+app.get('/api/testimonials', (req, res) => {
+  const db = getDb();
+  res.json(db.testimonials || []);
+});
+
+app.post('/api/testimonials', (req, res) => {
+  const db = getDb();
+  const { name, location, rating, title, comment, useCase, useCaseLabel } = req.body;
+
+  if (!name || typeof name !== 'string' || name.trim().length < 2) {
+    res.status(400).json({ error: 'Por favor, insira o seu nome.' });
+    return;
+  }
+
+  const numRating = Number(rating);
+  if (isNaN(numRating) || numRating < 1 || numRating > 5) {
+    res.status(400).json({ error: 'A avaliação deve ser entre 1 e 5 estrelas.' });
+    return;
+  }
+
+  if (!comment || typeof comment !== 'string' || comment.trim().length < 5) {
+    res.status(400).json({ error: 'Por favor, escreva um comentário com a sua experiência.' });
+    return;
+  }
+
+  const nameParts = name.trim().split(' ');
+  const initials =
+    nameParts.length > 1
+      ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
+      : name.slice(0, 2).toUpperCase();
+
+  const newTestimonial = {
+    id: `testim-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+    name: name.trim(),
+    location: (location || 'Luanda, Angola').trim(),
+    rating: numRating,
+    date: 'Hoje mesmo',
+    verifiedPurchase: true,
+    initials,
+    title: (title || 'Excelente Luminária').trim(),
+    comment: comment.trim(),
+    useCase: useCase || 'geral',
+    useCaseLabel: useCaseLabel || 'Geral',
+    productModel: 'LUMORA LED Recarregável 40cm',
+    helpfulCount: 0,
+    createdAt: new Date().toISOString()
+  };
+
+  if (!db.testimonials) db.testimonials = [];
+  db.testimonials.unshift(newTestimonial);
+  saveDb(db);
+
+  res.status(201).json({ success: true, testimonial: newTestimonial });
 });
 
 // 7. Track Order (Customer Self-Service)

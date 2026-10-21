@@ -30,7 +30,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
       onSuccess(res.token);
       setPasscode('');
     } catch (err: any) {
-      setError(err.message || 'Palavra-passe de administrador incorrecta.');
+      setError('Senha incorreta. Tente novamente.');
     } finally {
       setLoading(false);
     }
@@ -73,7 +73,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
               <input
                 type={showPass ? 'text' : 'password'}
                 required
-                placeholder="Insere a tua palavra-passe"
+                placeholder="Introduza a sua senha"
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
                 className="w-full px-3.5 py-2.5 bg-white/5 border border-white/15 rounded-md text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#C6A66B] pr-10"
@@ -85,9 +85,6 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
               >
                 {showPass ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
               </button>
-            </div>
-            <div className="mt-2 text-[11px] text-[#F8F8F6]/50">
-              Palavra-passe de acesso restrito: <strong className="text-[#C6A66B]">100210Suzana</strong>
             </div>
           </div>
 

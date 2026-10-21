@@ -242,9 +242,14 @@ export const AdminOrders: React.FC<AdminOrdersProps> = ({ token }) => {
             A carregar encomendas...
           </div>
         ) : orders.length === 0 ? (
-          <div className="py-16 text-center text-xs text-[#71717A] space-y-1">
-            <p className="font-semibold text-sm text-[#17191C]">Nenhuma encomenda encontrada</p>
-            <p>Tenta ajustar os filtros de pesquisa ou aguarda novos pedidos.</p>
+          <div className="py-16 text-center text-xs text-[#71717A] space-y-2">
+            <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center mx-auto">
+              <ShoppingBag className="w-6 h-6" />
+            </div>
+            <p className="font-bold text-sm text-[#17191C]">Ainda não existem dados registados</p>
+            <p className="max-w-sm mx-auto text-[#71717A]">
+              Nenhuma encomenda foi registada até ao momento. Os novos pedidos realizados pelos clientes na loja aparecerão aqui em tempo real.
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">

@@ -5,7 +5,8 @@ import {
   CreateOrderPayload,
   OrderConfirmationResult,
   Order,
-  SalesAnalytics
+  SalesAnalytics,
+  CustomerTestimonial
 } from '../types';
 import {
   INITIAL_PRODUCT,
@@ -17,7 +18,9 @@ import {
   saveOrderToFirestore,
   getOrderFromFirestore,
   getProductFromFirestore,
-  seedFirestoreIfEmpty
+  seedFirestoreIfEmpty,
+  saveTestimonialToFirestore,
+  getTestimonialsFromFirestore
 } from './firestoreService';
 
 // Helper for local storage persistence when running on static platforms (e.g. Vercel static CDN)
@@ -113,8 +116,16 @@ export async function createOrder(payload: CreateOrderPayload): Promise<OrderCon
         saveOrderToFirestore(data.order).catch(() => {});
       }
       return data;
+    } else {
+      const errData = await res.json().catch(() => null);
+      if (errData?.error) {
+        throw new Error(errData.error);
+      }
     }
-  } catch (err) {
+  } catch (err: any) {
+    if (err?.message && !err.message.includes('fetch')) {
+      throw err;
+    }
     console.warn('Backend /api/orders não respondeu. A processar encomenda com Firestore e persistência local:', err);
   }
 
@@ -221,27 +232,123 @@ export async function createStripePaymentIntent(
   customerName: string,
   customerPhone: string
 ): Promise<{ clientSecret: string; id: string; amountUsd: number; publishableKey: string }> {
-  try {
-    const res = await fetch('/api/stripe/create-payment-intent', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amountKz, customerName, customerPhone })
-    });
-    if (res.ok) {
-      return res.json();
-    }
-  } catch (err) {
-    console.warn('API Stripe não respondeu no servidor. A gerar intent de teste:', err);
+  const res = await fetch('/api/stripe/create-payment-intent', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ amountKz, customerName, customerPhone })
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(
+      errorData?.error ||
+        'A integração de pagamentos por cartão (Stripe) não se encontra configurada com credenciais válidas. Por favor utilize Pagamento na Entrega ou Transferência Bancária.'
+    );
   }
 
-  const usdAmount = Math.max(1, Math.round(amountKz / 900));
-  const simId = `pi_sim_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-  return {
-    clientSecret: `${simId}_secret_${Math.random().toString(36).substring(2, 9)}`,
-    id: simId,
-    amountUsd: usdAmount,
-    publishableKey: 'pk_test_51URbpVK5OaHHhzp50Sgkh7Etx'
-  };
+  return res.json();
+}
+
+export async function fetchTestimonials(): Promise<CustomerTestimonial[]> {
+  try {
+    const res = await fetch('/api/testimonials');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        return data;
+      }
+    }
+  } catch (err) {
+    console.warn('API /api/testimonials indisponível. A consultar Firestore / armazenamento persistente:', err);
+  }
+
+  // Fallback to Firestore
+  try {
+    const cloud = await getTestimonialsFromFirestore();
+    if (cloud && cloud.length > 0) return cloud;
+  } catch {}
+
+  // Fallback to local user testimonials
+  try {
+    const raw = localStorage.getItem('lumora_user_testimonials');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch {}
+
+  return [];
+}
+
+export async function submitTestimonial(
+  testimonial: {
+    name: string;
+    location?: string;
+    rating: number;
+    title?: string;
+    comment: string;
+    useCase?: string;
+    useCaseLabel?: string;
+  }
+): Promise<CustomerTestimonial> {
+  let created: CustomerTestimonial | null = null;
+  try {
+    const res = await fetch('/api/testimonials', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(testimonial)
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.testimonial) {
+        created = data.testimonial;
+      }
+    } else {
+      const err = await res.json().catch(() => null);
+      if (err?.error) throw new Error(err.error);
+    }
+  } catch (err: any) {
+    if (err?.message && !err.message.includes('fetch')) {
+      throw err;
+    }
+    console.warn('Falha na API de depoimentos. A gravar no Firestore / local:', err);
+  }
+
+  if (!created) {
+    const nameParts = testimonial.name.trim().split(' ');
+    const initials =
+      nameParts.length > 1
+        ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
+        : testimonial.name.slice(0, 2).toUpperCase();
+
+    created = {
+      id: `testim-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      name: testimonial.name.trim(),
+      location: (testimonial.location || 'Luanda, Angola').trim(),
+      rating: testimonial.rating,
+      date: 'Hoje mesmo',
+      verifiedPurchase: true,
+      initials,
+      title: (testimonial.title || 'Excelente Luminária').trim(),
+      comment: testimonial.comment.trim(),
+      useCase: (testimonial.useCase as any) || 'geral',
+      useCaseLabel: testimonial.useCaseLabel || 'Geral',
+      productModel: 'LUMORA LED Recarregável 40cm',
+      helpfulCount: 0
+    };
+  }
+
+  // Sync to Firestore & localStorage
+  saveTestimonialToFirestore(created).catch(() => {});
+  try {
+    const existing = JSON.parse(localStorage.getItem('lumora_user_testimonials') || '[]');
+    localStorage.setItem(
+      'lumora_user_testimonials',
+      JSON.stringify([created, ...existing.filter((e: any) => e.id !== created!.id)])
+    );
+  } catch {}
+
+  return created;
 }
 
 export async function trackOrder(query: string): Promise<any> {
@@ -322,7 +429,7 @@ export async function adminLogin(passcode: string): Promise<{ success: boolean; 
   if (passcode === validPass) {
     return { success: true, token: validPass };
   }
-  throw new Error('Palavra-passe de administrador incorrecta.');
+  throw new Error('Senha incorreta. Tente novamente.');
 }
 
 export async function adminVerify(token: string): Promise<boolean> {

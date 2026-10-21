@@ -70,7 +70,11 @@
         "category": "Luminária LED Recarregável",
         "durationFormatted": "0:12",
         "description": "Conheça em detalhes a barra de LED recarregável inteligente: corpo ultrafino de 9mm em alumínio, lente do sensor PIR e 3 temperaturas de cor (3000K, 4000K e 6000K).",
-        "keyBenefits": ["Perfil ultrafino de 9mm em alumínio", "3 temperaturas de cor ajustáveis", "Luz difusa anti-encandeamento"],
+        "keyBenefits": [
+          "Perfil ultrafino de 9mm em alumínio",
+          "3 temperaturas de cor ajustáveis",
+          "Luz difusa anti-encandeamento"
+        ],
         "thumbnail": "/assets/images/product_lumora_isolated_1792262011015.jpg",
         "platformVideoUrl": "/assets/videos/luminaria_video_1_apresentacao.mp4",
         "youtubeVideoUrl": "https://www.youtube.com/watch?v=L24CqW2Hx34",
@@ -83,7 +87,11 @@
         "category": "Instalação Magnética",
         "durationFormatted": "0:12",
         "description": "Veja como fixar as bases magnéticas com fita adesiva 3M em armários, roupeiros, madeira ou paredes sem furar e com encaixe magnético instantâneo.",
-        "keyBenefits": ["Zero furos na parede ou móveis", "Adesivo 3M de alta resistência", "Desencaixe magnético com 1 mão"],
+        "keyBenefits": [
+          "Zero furos na parede ou móveis",
+          "Adesivo 3M de alta resistência",
+          "Desencaixe magnético com 1 mão"
+        ],
         "thumbnail": "/assets/images/lumora_magnetic_mount_1792262011714.jpg",
         "platformVideoUrl": "/assets/videos/luminaria_video_2_instalacao.mp4",
         "youtubeVideoUrl": "https://www.youtube.com/watch?v=FEuwvYwy8hM",
@@ -96,7 +104,11 @@
         "category": "Sensor & Bateria USB-C",
         "durationFormatted": "0:12",
         "description": "Teste real de acendimento automático no escuro: detecção PIR em ângulo de 120° até 3 metros e bateria recarregável USB-C com até 60 dias de autonomia.",
-        "keyBenefits": ["Sensor PIR com detecção em 0,1s", "Bateria recarregável via USB-C", "Até 60 dias no modo automático"],
+        "keyBenefits": [
+          "Sensor PIR com detecção em 0,1s",
+          "Bateria recarregável via USB-C",
+          "Até 60 dias no modo automático"
+        ],
         "thumbnail": "/assets/images/lumora_usbc_charging_1792262012537.jpg",
         "platformVideoUrl": "/assets/videos/luminaria_video_3_sensor_bateria.mp4",
         "youtubeVideoUrl": "https://www.youtube.com/watch?v=I_eeP-jxg1o",
@@ -109,7 +121,11 @@
         "category": "Cozinha & Sob Armários",
         "durationFormatted": "0:12",
         "description": "Iluminação homogênea sob os armários aéreos para preparação de alimentos sem sombras, dispensando fiações elétricas e tomadas por perto.",
-        "keyBenefits": ["Bancada bem iluminada sem sombras", "Sem fios nem tomadas na bancada", "Modo iluminação contínua (ON)"],
+        "keyBenefits": [
+          "Bancada bem iluminada sem sombras",
+          "Sem fios nem tomadas na bancada",
+          "Modo iluminação contínua (ON)"
+        ],
         "thumbnail": "/assets/images/lumora_kitchen_undercabinet_1792359686505.jpg",
         "platformVideoUrl": "/assets/videos/luminaria_video_4_cozinha_bancada.mp4",
         "youtubeVideoUrl": "https://www.youtube.com/watch?v=JAbIeNqQnow",
@@ -122,7 +138,11 @@
         "category": "Segurança Noturna",
         "durationFormatted": "0:12",
         "description": "Acendimento automático e suave ao passar por corredores ou descer escadas à noite. Evita tropeções para idosos e crianças sem ofuscar a visão.",
-        "keyBenefits": ["Passagem noturna segura e automática", "Luz acolhedora para os olhos", "Desliga sozinho após 20 segundos"],
+        "keyBenefits": [
+          "Passagem noturna segura e automática",
+          "Luz acolhedora para os olhos",
+          "Desliga sozinho após 20 segundos"
+        ],
         "thumbnail": "/assets/images/lumora_staircase_night_1792359733537.jpg",
         "platformVideoUrl": "/assets/videos/luminaria_video_5_escadas_corredor.mp4",
         "youtubeVideoUrl": "https://www.youtube.com/watch?v=cBdeOHrVFP0",
@@ -345,102 +365,6 @@
       "returns": "Trocas e Devoluções: Caso o produto apresente defeito de fabrico, o cliente dispõe de 7 dias após a recepção para solicitar a verificação e substituição da luminária, mediante apresentação do produto na embalagem original."
     }
   },
-  "orders": [
-    {
-      "id": "LMR-84123",
-      "customerName": "António Silva",
-      "customerPhone": "+244923123456",
-      "province": "Luanda",
-      "municipality": "Talatona",
-      "neighborhood": "Benfica",
-      "address": "Rua 4, Casa 20",
-      "referencePoint": "Em frente ao banco BAI",
-      "notes": "",
-      "quantity": 1,
-      "unitPrice": 29900,
-      "subtotal": 29900,
-      "deliveryFee": 2500,
-      "total": 32400,
-      "paymentMethod": "cash_on_delivery",
-      "orderStatus": "new",
-      "paymentStatus": "pending",
-      "internalNotes": "",
-      "history": [
-        {
-          "timestamp": "2026-10-17T18:41:48.881Z",
-          "action": "Encomenda registada com sucesso pelo cliente"
-        }
-      ],
-      "createdAt": "2026-10-17T18:41:48.881Z",
-      "updatedAt": "2026-10-17T18:41:48.881Z"
-    },
-    {
-      "id": "LMR-10492",
-      "customerName": "Manuel dos Santos Cabral",
-      "customerPhone": "+244923112233",
-      "province": "Luanda",
-      "municipality": "Talatona",
-      "neighborhood": "Benfica",
-      "address": "Rua Principal do Benfica, Condomínio Girassol, Casa 14B",
-      "referencePoint": "Próximo à padaria Bela Luanda",
-      "notes": "Ligar antes de chegar, condomínio com portaria",
-      "quantity": 2,
-      "unitPrice": 29900,
-      "subtotal": 59800,
-      "deliveryFee": 2500,
-      "total": 62300,
-      "paymentMethod": "cash_on_delivery",
-      "orderStatus": "confirmed",
-      "paymentStatus": "pending",
-      "internalNotes": "Cliente confirmou por chamada. Estafeta Rui escalado para entrega amanhã às 14h.",
-      "history": [
-        {
-          "timestamp": "2026-10-16T22:41:40.094Z",
-          "action": "Nova encomenda submetida via website"
-        },
-        {
-          "timestamp": "2026-10-17T03:41:40.094Z",
-          "action": "Estado alterado para Confirmada após contacto telefónico"
-        }
-      ],
-      "createdAt": "2026-10-16T22:41:40.094Z",
-      "updatedAt": "2026-10-17T03:41:40.094Z"
-    },
-    {
-      "id": "LMR-10488",
-      "customerName": "Esperança de Almeida",
-      "customerPhone": "+244912998877",
-      "province": "Luanda",
-      "municipality": "Belas",
-      "neighborhood": "Kilamba",
-      "address": "Quarteirão B, Edifício B12, Apartamento 402",
-      "referencePoint": "Entrada junto à farmácia da rotunda",
-      "notes": "Entregar preferencialmente após as 16h",
-      "quantity": 1,
-      "unitPrice": 29900,
-      "subtotal": 29900,
-      "deliveryFee": 3000,
-      "total": 32900,
-      "paymentMethod": "bank_transfer",
-      "orderStatus": "delivered",
-      "paymentStatus": "paid",
-      "internalNotes": "Comprovativo BAI verificado com sucesso. Entrega concluída pelo estafeta.",
-      "history": [
-        {
-          "timestamp": "2026-10-15T18:41:40.094Z",
-          "action": "Nova encomenda submetida via website"
-        },
-        {
-          "timestamp": "2026-10-16T02:41:40.094Z",
-          "action": "Pagamento confirmado via BAI"
-        },
-        {
-          "timestamp": "2026-10-16T18:41:40.094Z",
-          "action": "Encomenda entregue com sucesso"
-        }
-      ],
-      "createdAt": "2026-10-15T18:41:40.094Z",
-      "updatedAt": "2026-10-16T18:41:40.094Z"
-    }
-  ]
+  "orders": [],
+  "testimonials": []
 }
