@@ -26,3 +26,116 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a69e;
 }
+
+/* -------------------------------------------------------------
+ * LUMORA Theme System
+ * Default theme is the official platform theme.
+ * Other themes allow users to customize their visual background.
+ * ------------------------------------------------------------- */
+
+/* Default Platform Theme (Predefinido da Plataforma) */
+.theme-default {
+  --theme-bg-body: #F8F8F6;
+  --theme-bg-surface: #FFFFFF;
+  --theme-bg-subtle: #F4F4F1;
+  --theme-text-primary: #17191C;
+  --theme-text-muted: #52525B;
+  --theme-border: #E4E4E7;
+}
+
+/* Dark Noir (Noite Profunda) */
+.theme-dark-noir {
+  --theme-bg-body: #0B0C0E;
+  --theme-bg-surface: #14161B;
+  --theme-bg-subtle: #191C22;
+  --theme-text-primary: #F3F4F6;
+  --theme-text-muted: #9CA3AF;
+  --theme-border: #252932;
+}
+
+.theme-dark-noir .bg-white {
+  background-color: #14161B !important;
+}
+.theme-dark-noir .bg-\[\#F8F8F6\],
+.theme-dark-noir .bg-\[\#F4F4F1\] {
+  background-color: #0B0C0E !important;
+}
+.theme-dark-noir .text-\[\#17191C\] {
+  color: #F3F4F6 !important;
+}
+.theme-dark-noir .text-\[\#52525B\],
+.theme-dark-noir .text-\[\#71717A\] {
+  color: #9CA3AF !important;
+}
+.theme-dark-noir .border-\[\#E4E4E7\],
+.theme-dark-noir .border-\[\#F4F4F5\] {
+  border-color: #252932 !important;
+}
+
+/* Light Minimal (Luz Clara) */
+.theme-light-minimal {
+  --theme-bg-body: #FAF9F6;
+  --theme-bg-surface: #FFFFFF;
+  --theme-bg-subtle: #F2F1EC;
+  --theme-text-primary: #18191B;
+  --theme-text-muted: #5A5D66;
+  --theme-border: #E2E2DC;
+}
+
+/* Warm Amber (Âmbar 3000K) */
+.theme-warm-amber {
+  --theme-bg-body: #181411;
+  --theme-bg-surface: #221C17;
+  --theme-bg-subtle: #2A231D;
+  --theme-text-primary: #FAF5ED;
+  --theme-text-muted: #D4C3B2;
+  --theme-border: #3B3026;
+}
+
+.theme-warm-amber .bg-white {
+  background-color: #221C17 !important;
+}
+.theme-warm-amber .bg-\[\#F8F8F6\],
+.theme-warm-amber .bg-\[\#F4F4F1\] {
+  background-color: #181411 !important;
+}
+.theme-warm-amber .text-\[\#17191C\] {
+  color: #FAF5ED !important;
+}
+.theme-warm-amber .text-\[\#52525B\],
+.theme-warm-amber .text-\[\#71717A\] {
+  color: #D4C3B2 !important;
+}
+.theme-warm-amber .border-\[\#E4E4E7\],
+.theme-warm-amber .border-\[\#F4F4F5\] {
+  border-color: #3B3026 !important;
+}
+
+/* Modern Slate (Ardósia Nórdica) */
+.theme-modern-slate {
+  --theme-bg-body: #151920;
+  --theme-bg-surface: #1D232C;
+  --theme-bg-subtle: #242B36;
+  --theme-text-primary: #F1F4F8;
+  --theme-text-muted: #9DA7B5;
+  --theme-border: #2C3442;
+}
+
+.theme-modern-slate .bg-white {
+  background-color: #1D232C !important;
+}
+.theme-modern-slate .bg-\[\#F8F8F6\],
+.theme-modern-slate .bg-\[\#F4F4F1\] {
+  background-color: #151920 !important;
+}
+.theme-modern-slate .text-\[\#17191C\] {
+  color: #F1F4F8 !important;
+}
+.theme-modern-slate .text-\[\#52525B\],
+.theme-modern-slate .text-\[\#71717A\] {
+  color: #9DA7B5 !important;
+}
+.theme-modern-slate .border-\[\#E4E4E7\],
+.theme-modern-slate .border-\[\#F4F4F5\] {
+  border-color: #2C3442 !important;
+}

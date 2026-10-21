@@ -17,7 +17,9 @@ import { YouTubeVideoModal } from './components/YouTubeVideoModal';
 import { VideoGallerySection } from './components/VideoGallerySection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { AdminDashboard } from './components/admin/AdminDashboard';
-import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck, Star } from 'lucide-react';
+import { AlertCircle, RefreshCw, ArrowRight, Sparkles, Layers, ShieldCheck, Star, Palette } from 'lucide-react';
+import { ThemeId, THEME_OPTIONS } from './types/theme';
+import { ThemeSelectorModal } from './components/ThemeSelectorModal';
 
 import {
   INITIAL_PRODUCT,
@@ -49,6 +51,12 @@ export default function App() {
     localStorage.getItem('lumora_admin_token')
   );
   const [isAdminView, setIsAdminView] = useState<boolean>(false);
+
+  // User Background Theme (Defaults strictly to platform default 'default' upon entering)
+  const [themeId, setThemeId] = useState<ThemeId>('default');
+  const [isThemeModalOpen, setIsThemeModalOpen] = useState<boolean>(false);
+
+  const currentTheme = THEME_OPTIONS.find((t) => t.id === themeId) || THEME_OPTIONS[0];
 
   const handleOpenVideo = (videoId?: string) => {
     if (videoId) {
@@ -166,7 +174,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F8F6] text-[#17191C] flex flex-col selection:bg-[#C6A66B]/30">
+    <div className={`min-h-screen ${currentTheme.containerClass} flex flex-col selection:bg-[#C6A66B]/30 transition-colors duration-300`}>
       {/* Navigation with structured tabs & Login button */}
       <Navbar
         settings={settings}
@@ -177,6 +185,8 @@ export default function App() {
         }}
         onOpenLogin={handleOpenLogin}
         onOpenVideo={() => handleOpenVideo()}
+        onOpenThemeSelector={() => setIsThemeModalOpen(true)}
+        activeThemeName={currentTheme.name}
       />
 
       {/* Main Content: Shows strictly the selected tab */}
@@ -465,6 +475,30 @@ export default function App() {
         policyKey={activePolicyKey}
         policies={settings.policies}
         onClose={() => setActivePolicyKey(null)}
+      />
+
+      {/* Floating Theme Customizer Button (Bottom-Left) */}
+      <div className="fixed bottom-6 left-6 z-40 hidden sm:block">
+        <button
+          type="button"
+          onClick={() => setIsThemeModalOpen(true)}
+          className="flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-[#17191C]/90 hover:bg-[#17191C] text-[#F8F8F6] border border-white/20 hover:border-[#C6A66B] shadow-xl hover:shadow-2xl backdrop-blur-md transition-all text-xs font-medium cursor-pointer group hover:scale-105"
+          title="Escolher fundo visual da plataforma (Predefinido: Padrão LUMORA)"
+        >
+          <div className="w-5 h-5 rounded-full bg-[#C6A66B]/20 text-[#C6A66B] flex items-center justify-center">
+            <Palette className="w-3 h-3 group-hover:rotate-45 transition-transform" />
+          </div>
+          <span className="hidden md:inline">Fundo:</span>
+          <span className="font-semibold text-[#C6A66B]">{currentTheme.name}</span>
+        </button>
+      </div>
+
+      {/* Background Theme Selector Modal */}
+      <ThemeSelectorModal
+        isOpen={isThemeModalOpen}
+        activeTheme={themeId}
+        onSelectTheme={(t) => setThemeId(t)}
+        onClose={() => setIsThemeModalOpen(false)}
       />
     </div>
   );

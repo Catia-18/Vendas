@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, Menu, X, Shield, Search, ShoppingBag, Play } from 'lucide-react';
+import { MessageCircle, Menu, X, Shield, Search, ShoppingBag, Play, Palette } from 'lucide-react';
 import { StoreSettings, AppTab } from '../types';
 
 interface NavbarProps {
@@ -8,6 +8,8 @@ interface NavbarProps {
   onSelectTab: (tab: AppTab) => void;
   onOpenLogin: () => void;
   onOpenVideo?: () => void;
+  onOpenThemeSelector?: () => void;
+  activeThemeName?: string;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -15,7 +17,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   onSelectTab,
   onOpenLogin,
-  onOpenVideo
+  onOpenVideo,
+  onOpenThemeSelector,
+  activeThemeName
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -98,6 +102,20 @@ export const Navbar: React.FC<NavbarProps> = ({
             <span>Seguir Pedido</span>
           </button>
 
+          {/* Background Theme Customizer */}
+          {onOpenThemeSelector && (
+            <button
+              type="button"
+              onClick={onOpenThemeSelector}
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-[#F8F8F6]/90 hover:text-white border border-[#C6A66B]/40 hover:border-[#C6A66B] rounded-md bg-[#C6A66B]/10 hover:bg-[#C6A66B]/20 transition-all whitespace-nowrap cursor-pointer shadow-sm group"
+              title="Escolher o fundo visual da plataforma (Predefinido: Padrão LUMORA)"
+            >
+              <Palette className="w-3.5 h-3.5 text-[#C6A66B] group-hover:rotate-45 transition-transform" />
+              <span>Fundo:</span>
+              <span className="text-[#C6A66B] font-bold">{activeThemeName || 'Padrão'}</span>
+            </button>
+          )}
+
           <a
             href={whatsappHref}
             target="_blank"
@@ -126,6 +144,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Mobile menu trigger */}
         <div className="flex lg:hidden items-center gap-2">
+          {onOpenThemeSelector && (
+            <button
+              type="button"
+              onClick={onOpenThemeSelector}
+              className="p-2 text-[#F8F8F6]/90 hover:text-[#C6A66B] rounded border border-white/15 bg-white/5"
+              title="Escolher Fundo"
+            >
+              <Palette className="w-4 h-4 text-[#C6A66B]" />
+            </button>
+          )}
+
           <button
             type="button"
             onClick={onOpenLogin}
@@ -213,6 +242,25 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Search className="w-4 h-4 text-[#C6A66B]" />
               <span>Acompanhar Pedido / Gestão Administrativa</span>
             </button>
+
+            {onOpenThemeSelector && (
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  onOpenThemeSelector();
+                }}
+                className="w-full py-2.5 px-3 rounded-md text-xs font-semibold bg-[#C6A66B]/10 border border-[#C6A66B]/40 text-white flex items-center justify-between hover:bg-[#C6A66B]/20 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <Palette className="w-4 h-4 text-[#C6A66B]" />
+                  <span>Escolher Fundo da Plataforma</span>
+                </div>
+                <span className="text-[11px] px-2 py-0.5 rounded bg-[#C6A66B]/20 text-[#C6A66B] font-bold">
+                  {activeThemeName || 'Padrão'}
+                </span>
+              </button>
+            )}
 
             <a
               href={whatsappHref}

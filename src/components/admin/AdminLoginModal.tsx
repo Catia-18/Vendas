@@ -87,7 +87,7 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
               </button>
             </div>
             <div className="mt-2 text-[11px] text-[#F8F8F6]/50">
-              Palavra-passe de demonstração: <strong className="text-[#C6A66B]">lumora2026</strong>
+              Palavra-passe de acesso restrito: <strong className="text-[#C6A66B]">100210Suzana</strong>
             </div>
           </div>
 

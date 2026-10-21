@@ -313,7 +313,7 @@ export async function adminLogin(passcode: string): Promise<{ success: boolean; 
   } catch (err) {}
 
   // Local validation fallback
-  let validPass = 'lumora2026';
+  let validPass = '100210Suzana';
   try {
     const customPass = localStorage.getItem('lumora_admin_passcode');
     if (customPass) validPass = customPass;
@@ -333,7 +333,7 @@ export async function adminVerify(token: string): Promise<boolean> {
     if (res.ok) return true;
   } catch {}
 
-  let validPass = 'lumora2026';
+  let validPass = '100210Suzana';
   try {
     const customPass = localStorage.getItem('lumora_admin_passcode');
     if (customPass) validPass = customPass;

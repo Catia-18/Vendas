@@ -256,7 +256,7 @@ const DEFAULT_SETTINGS = {
   whatsappDisplay: '+244 923 456 789',
   email: 'contacto@lumora.ao',
   currency: 'Kz',
-  adminPasscode: 'lumora2026',
+  adminPasscode: '100210Suzana',
   stripeConfig: {
     enabled: true,
     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY || 'pk_test_51URbpVK5OaHHhzp50Sgkh7Etx',
@@ -522,7 +522,7 @@ function saveDb(data: any) {
 function requireAdmin(req: express.Request, res: express.Response, next: express.NextFunction) {
   const authHeader = req.headers.authorization;
   const db = getDb();
-  const validPass = db.settings.adminPasscode || 'lumora2026';
+  const validPass = db.settings.adminPasscode || '100210Suzana';
 
   if (!authHeader) {
     res.status(401).json({ error: 'Sessão administrativa não autorizada' });
@@ -751,7 +751,7 @@ app.put('/api/admin/settings', requireAdmin, (req, res) => {
 app.post('/api/admin/auth/login', (req, res) => {
   const { passcode } = req.body;
   const db = getDb();
-  const validPass = db.settings.adminPasscode || 'lumora2026';
+  const validPass = db.settings.adminPasscode || '100210Suzana';
 
   if (passcode === validPass) {
     res.json({ success: true, token: validPass });
